@@ -25,7 +25,7 @@ export default function BottomNav() {
   return (
   <div style={{marginTop: '3em', position:'relative'}}>
   <Router>
-    <BottomNavigation
+    {/* <BottomNavigation
       style={{margin: 'auto', height: '100%', width:'100%'}}
       value={value}
       onChange={(event, newValue) => {
@@ -36,8 +36,8 @@ export default function BottomNav() {
     >
       <BottomNavigationAction component={Link} to='/' label="Home" icon={<HomeIcon />} />
       <BottomNavigationAction component={Link} to="/record" label="Favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction component={Link} to="/create"label="Nearby" icon={<LocationOnIcon />} />   
-    </BottomNavigation>
+      <BottomNavigationAction component={Link} to="/create"label="Nearby" icon={<LocationOnIcon />} />
+    </BottomNavigation> */}
 
     <Switch>
       {/* <Route path="/" exact component={FoodSearch} /> */}

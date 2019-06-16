@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,6 +8,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
+
+import "./FoodSearch.css";
 
 const drawerWidth = 240;
 
@@ -133,21 +136,28 @@ function TopNav() {
         })}
       >
          
-          <Toolbar style={{marginLeft: '100px'}}>
-          <Typography className={classes.title} variant="h6" noWrap>MenuApp</Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'Search' }}
-            />
-        </div>        
+        <Toolbar style={{marginLeft: '100px'}}>
+        <Typography className={classes.title} variant="h6" noWrap>
+          <a className="EatingDiary" href="/">Eating Diary</a>
+        </Typography>
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ 'aria-label': 'Search' }}
+          />
+        </div> 
+        <div id="nav">
+        <ul>
+            <li><a href="/profile">Profile</a></li>
+          </ul>
+        </div>       
         </Toolbar>
 
       </AppBar>

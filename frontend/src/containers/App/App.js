@@ -60,8 +60,6 @@ class App extends Component {
         <TopNav /><br/><br/>
         {/* <BotBtn /> */}
         <BottomNav/>
-        
-        
       </div>
     )
   }
