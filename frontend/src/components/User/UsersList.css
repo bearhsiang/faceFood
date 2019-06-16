@@ -1,0 +1,36 @@
+.UsersList {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 4.4rem 10%;
+}
+.Users {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 16.66rem;
+    margin: 0 .5rem 2.3rem .5rem;
+}
+
+.Users .image-container {
+    height: 16.66rem;
+    margin-bottom: 1rem;
+}
+
+.Users h2 {
+    margin-bottom: .5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.UsersInformation {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Users p {
+    margin-top: 1.5em;
+    font-size: .88rem;
+    font-weight: 300;
+    line-height: 1rem;
+}
