@@ -39,13 +39,13 @@ export default function BottomNav() {
       <BottomNavigationAction component={Link} to="/create"label="Nearby" icon={<LocationOnIcon />} />
     </BottomNavigation> */}
 
-    <Switch>
-      {/* <Route path="/" exact component={FoodSearch} /> */}
-      <Route path='/' exact component={Auth} />
-      <Route path="/record" component={MenuList}></Route>
-      <Route path="/create" component={CreateList}></Route>
-      <Route path="/edit/:id" component={EditList} />
-    </Switch>
+    {/* <Switch>
+          <Route path="/" exact component={FoodSearch} />
+          <Route path='/' exact component={Auth} />
+          <Route path="/record" component={MenuList}></Route>
+          <Route path="/create" component={CreateList}></Route>
+          <Route path="/edit/:id" component={EditList} />
+        </Switch> */}
   </Router>
   
   </div>

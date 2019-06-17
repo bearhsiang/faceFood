@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import clsx from 'clsx';
+
 import { makeStyles, fade } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,6 +11,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
 import "./FoodSearch.css";
+
+import MenuList from './Menu/todos-list';
+import CreateList from './Menu/create-todo';
+import EditList from './Menu/edit-todo';
+import Auth from './Home/Auth';
 
 const drawerWidth = 240;
 
@@ -129,38 +135,47 @@ function TopNav() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-         
-        <Toolbar style={{marginLeft: '100px'}}>
-        <Typography className={classes.title} variant="h6" noWrap>
-          <a className="EatingDiary" href="/">Eating Diary</a>
-        </Typography>
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'Search' }}
-          />
-        </div> 
-        <div id="nav">
-        <ul>
-            <li><a href="/profile">Profile</a></li>
-          </ul>
-        </div>       
-        </Toolbar>
-
-      </AppBar>
+      <Router>
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+        >
+           
+          <Toolbar style={{marginLeft: '100px'}}>
+            <Typography className={classes.title} variant="h6" noWrap style={{marginTop: '6px'}}>
+              <a className="EatingDiary" href="/">Eating Diary</a>
+            </Typography>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'Search' }}
+              />
+            </div> 
+            <div id="nav">
+            <ul>
+                <li><a href="/profile">Profile</a></li>
+              </ul>
+            </div>       
+          </Toolbar>
+        </AppBar>
+        <Switch>
+          {/* <Route path="/" exact component={FoodSearch} /> */}
+          <Route path='/' exact component={MenuList} />
+          <Route path="/profile" component={Auth} />
+          <Route path="/record" component={MenuList} />
+          <Route path="/create" component={CreateList} />
+          <Route path="/edit/:id" component={EditList} />
+        </Switch>
+      </Router>
     </div>
   );
 }

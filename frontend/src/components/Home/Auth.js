@@ -4,6 +4,9 @@ import Home from './Home'
 import Login from './Login'
 import io from 'socket.io-client'
 import Signup from './Signup'
+
+import "../FoodSearch.css";
+
 class Auth extends Component{
 	constructor(props){
 		super(props);
@@ -28,7 +31,7 @@ class Auth extends Component{
 			return <Home handleLogout={this.logout}/>
 		}
 		return(
-			<div>
+			<div className="content">
 				<Login handleLogin={this.login} />
 				<Signup handleLogin={this.login} />
 			</div>

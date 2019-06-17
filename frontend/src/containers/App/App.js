@@ -59,7 +59,7 @@ class App extends Component {
       <div>
         <TopNav /><br/><br/>
         {/* <BotBtn /> */}
-        <BottomNav/>
+        {/* <BottomNav/> */}
       </div>
     )
   }
