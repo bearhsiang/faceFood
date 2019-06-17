@@ -15,8 +15,7 @@ export default class CreatePosts extends Component {
             d: today.getDate(),
             text: '',
             location: '',
-            photo: '',
-            previewURL: '',
+            photo: [],
             rate: 2.5
         };
         this.socket = io.connect('http://localhost:3001');
@@ -47,26 +46,44 @@ export default class CreatePosts extends Component {
     }
 
     uploadFigure = (e) => {
-		e.preventDefault();
-		let reader = new FileReader();  // reader.result is the base64 of photo
-        let file = e.target.files[0];
-        console.log("The image: ");
-        console.log(file);
-		reader.onload = () => {
-			this.setState({
-				photo: file,
-				previewURL: reader.result
-			});
-		}
-		reader.readAsDataURL(file);
+        // https://stackoverflow.com/questions/55526876/reactjs-preview-multiple-images-before-upload
+        e.preventDefault();
+        if(e.target.files) {
+            const files = Array.from(e.target.files);
+            Promise.all(files.map(img => {
+                return(new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.addEventListener('load', element => {
+                        resolve(element.target.result);
+                    });
+                    reader.addEventListener('error', reject);
+                    reader.readAsDataURL(img);
+                }));
+            }))
+            .then(images => {
+                this.setState({ photo: images});
+            }, error => {
+                console.error(error);
+            });
+        }
+
+        // let reader = new FileReader();  // reader.result is the base64 of photo
+        // let file = e.target.files[0];
+		// reader.onloadend = () => {
+		// 	this.setState({
+		// 		photo: [...this.state.photo, file],
+		// 		previewURL: [...this.state.previewURL, reader.result]
+		// 	});
+		// }
+        // reader.readAsDataURL(file);
     }
+
     onSubmitHandler(e) {
         e.preventDefault();
-
-        console.log("The date is " + this.state.y + " " + this.state.m + " " + this.state.d)
-        
+        console.log(Cookie.get('user'));
+        // console.log("The date is " + this.state.y + " " + this.state.m + " " + this.state.d)
         if(!this.state.name) return;
-         let newpost = {
+        let newpost = {
             author: this.state.author,
             name: this.state.name,
             y: this.state.y,
@@ -77,16 +94,17 @@ export default class CreatePosts extends Component {
             photo: this.state.photo,
             rate: this.state.rate
         };
+        console.log(newpost);
         this.setState = {
-            author: '',
-            name: '',
-            y: '',
-            m: '',
-            d: '',
-            text: '',
-            location: '',
-            photo: '',
-            rate: ''
+            // author: "",
+            name: "",
+            y: "",
+            m: "",
+            d: "",
+            text: "",
+            location: "",
+            photo: [],
+            rate: 2.5
         }
         this.socket.emit('createPost', newpost);
     }
@@ -94,7 +112,7 @@ export default class CreatePosts extends Component {
     render() {
         return (
         <div className="container" style={{margin: '2rem auto', height: '600px', width: '300px'}}>
-            <form onSubmit={this.onSubmitHandler}>
+            <form onSubmit={this.onSubmitHandler} >
                 <Form.Group as={Row} controlId="formName">
                     <label>Name</label>
                     <input
@@ -131,13 +149,20 @@ export default class CreatePosts extends Component {
 
                 <Form.Group as={Row} controlId="formFigure">
                     <Form.Label>Image</Form.Label>
-                    <input id='figure'
+                    <input 
+
+                        name="file[]"
+                        id='figure'
                         type="file"
                         className='form-control'
-                        onChange={this.uploadFigure}
+                        multiple onChange={this.uploadFigure}
                     />
                 </Form.Group>
-                {this.state.previewURL !== '' && <img style={{height: '16.66rem', marginBottom: '1rem', marginLeft: '-0.5rem'}} src={this.state.previewURL} alt="preview" />}
+
+                {this.state.previewURL !== [] && 
+                this.state.photo.map((url, id) => {
+                    return <img key={id}  style={{height: '16.66rem', width: '16.66rem', marginBottom: '1rem', marginLeft: '-0.5rem'}} src={url} alt="preview" /> })
+               }
 
                 <Form.Group as={Row} controlId="formRate">
                     <input

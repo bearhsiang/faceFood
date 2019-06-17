@@ -21,7 +21,7 @@ class BotBtn extends Component {
         return (
             <div> 
                 
-                <div style={{position: 'absolute', marginLeft: '85em', marginTop: '30em'}}>
+                <div style={{position: 'absolute', marginLeft: '90em', marginTop: '40em'}}>
                     <Button
                     tooltip="The Bot will help you!"
                     rotate={false}
@@ -32,7 +32,7 @@ class BotBtn extends Component {
                     </svg>                
                     </Button>
                 </div>
-                <div style={{display: this.state.openBot === true ? "block" : "none", position: 'absolute', marginLeft: '60em'}}>
+                <div style={{display: this.state.openBot === true ? "block" : "none", position: 'absolute', marginLeft: '70em'}}>
                     <CreatePosts  />
                 </div>
                

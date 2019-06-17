@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Users from './Users';
 import './UsersList.css';
 import io from 'socket.io-client';
+import Cookie from 'js-cookie';
 
 export default class UsersList extends Component {
     constructor(props) {
@@ -10,12 +11,15 @@ export default class UsersList extends Component {
         this.state = {
             otherusers: []
         };
-
+        this.user = Cookie.get('user');
         this.socket = io.connect('http://localhost:3001');
+        this.socket.emit('getUsers', this.user);
+        this.socket.on('users', data => { this.setState({ otherusers: data})});        
     }
     componentDidMount() {
         // listen for data from db
-        this.socket.once('getUsers', data => this.setState({ otherusers: data}))
+        this.socket.emit('getUsers', this.user);
+        this.socket.on('users', data => { this.setState({ otherusers: data})});
     }
     
     render() {
@@ -23,7 +27,6 @@ export default class UsersList extends Component {
             <div className="UsersList">
             {
                 this.state.otherusers.map((user, id) => {
-                    console.log(user.figure)
                     return <Users key={id} user={user} socket={this.socket} />
                 })
             }

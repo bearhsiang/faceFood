@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import BotBtn from '../BotBtn';
+import BotBtn from '../BotBtn';
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Cookie from 'js-cookie'
@@ -28,6 +28,7 @@ class Profile extends Component{
 	            <button className="btn" onClick={this.logout} style={{backgroundColor: '#3f51b5', color: 'white'}} >
 					Logout
 				</button>
+				<BotBtn />
 	        </div>
 		)
 	}
