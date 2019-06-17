@@ -8,36 +8,7 @@ export default class UsersList extends Component {
         super(props);
         // delete the content of otherusers for the real implementation and uncomment the two functions below!
         this.state = {
-            otherusers: [
-                {
-                    id: 1,
-                    name: 'Bob',
-                    email: 'bob@example.com',
-                    figure: 'man.jpg',
-                    wantlist: 1
-                },
-                {
-                    id: 2,
-                    name: 'Andy',
-                    email: 'andy@example.com',
-                    figure: 'man.jpg',
-                    wantlist: 2
-                },
-                {
-                    id: 3,
-                    name: 'Sarah',
-                    email: 'sarah@example.com',
-                    figure: 'man.jpg',
-                    wantlist: 3
-                },
-                {
-                    id: 4,
-                    name: 'Budi',
-                    email: 'budi@example.com',
-                    figure: 'man.jpg',
-                    wantlist: 4
-                }
-            ]
+            otherusers: []
         };
 
         this.socket = io.connect('http://localhost:3001');
