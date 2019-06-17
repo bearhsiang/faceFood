@@ -66,7 +66,8 @@ export default class CreatePosts extends Component {
         console.log("The date is " + this.state.y + " " + this.state.m + " " + this.state.d)
         
         if(!this.state.name) return;
-        let newpost = {
+         let newpost = {
+            author: this.state.author,
             name: this.state.name,
             y: this.state.y,
             m: this.state.m,
@@ -76,6 +77,17 @@ export default class CreatePosts extends Component {
             photo: this.state.photo,
             rate: this.state.rate
         };
+        this.setState = {
+            author: '',
+            name: '',
+            y: '',
+            m: '',
+            d: '',
+            text: '',
+            location: '',
+            photo: '',
+            rate: ''
+        }
         this.socket.emit('createPost', newpost);
     }
 
