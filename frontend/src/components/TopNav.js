@@ -8,8 +8,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-
 import "./FoodSearch.css";
+import Users from './User/Users';
 
 const drawerWidth = 240;
 
@@ -154,12 +154,12 @@ function TopNav() {
           />
         </div> 
         <div id="nav">
-        <ul>
+          <ul>
             <li><a href="/profile">Profile</a></li>
+            <li><a href="/login">Login</a></li>
           </ul>
         </div>       
         </Toolbar>
-
       </AppBar>
     </div>
   );

@@ -81,7 +81,7 @@ export default class CreatePosts extends Component {
 
     render() {
         return (
-        <div className="container" style={{margin: '2rem auto', height: '600px', width: '400px'}}>
+        <div className="container" style={{margin: '2rem auto', height: '600px', width: '300px'}}>
             <form onSubmit={this.onSubmitHandler}>
                 <Form.Group as={Row} controlId="formName">
                     <label>Name</label>
