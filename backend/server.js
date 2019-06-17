@@ -78,14 +78,15 @@ io.on('connection', function(socket){
             }
         })
     })
-    socket.on('createPost', ({author, name, y, m, d, text, location, photolist, rate}) => {
+    socket.on('createPost', ({author, name, y, m, d, text, location, photo, rate}) => {
         let post_id = uuidv4();
-        let photo_id_list = photolist.map(photo => {
-            let photo_id = uuidv4;
-            storeImg(photo_id, photo);
+        let photo_id_list = photo.map(img => {
+            let photo_id = uuidv4();
+            storeImg(photo_id, img);
             return photo_id;
-        })
-        db.posts.push({
+        });
+        console.log(photo_id_list);
+        let newpost = {
             id: post_id,
             author: author,
             name: name,
@@ -96,7 +97,9 @@ io.on('connection', function(socket){
             location: location,
             photo: photo_id_list,
             rate: rate,
-        })
+        }
+        // console.log(newpost);
+        db.posts.push(newpost);
     })
 
 });

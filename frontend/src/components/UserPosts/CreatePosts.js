@@ -96,7 +96,7 @@ export default class CreatePosts extends Component {
         };
         console.log(newpost);
         this.setState = {
-            author: "",
+            // author: "",
             name: "",
             y: "",
             m: "",

@@ -9,7 +9,8 @@ export default class Users extends Component {
             image: ''
         }
         this.socket = this.props.socket;
-        this.socket.on('getImgByID', this.props.user.figure, image => {
+        this.socket.emit('getImgByID', this.props.user.figure);
+        this.socket.on('img', image => {
             this.setState({image: image})
         });
     }
