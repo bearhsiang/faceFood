@@ -27,7 +27,8 @@ class App extends Component {
         <Router>
           <Switch>
             {/* <Route path="/" exact component={FoodSearch} /> */}
-            <Route path='/user' exact component={Auth}/>
+            <Route path='/login' component={Auth}/>
+            <Route path='/users/' component={Profile}/>
             <Route path="/record" component={MenuList}></Route>
             <Route path="/create" component={CreateList}></Route>
             <Route path="/edit/:id" component={EditList}/>

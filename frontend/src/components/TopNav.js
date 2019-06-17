@@ -13,7 +13,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
 import "./FoodSearch.css";
-// import classes from "./TopNav.css";
 
 import Users from './User/Users';
 import MenuList from './Menu/todos-list';
@@ -133,62 +132,31 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const state = Cookie.get('user');
-// var endpoint = 'http://localhost:3001'
-// var setSocket;
+var show = "";
 
-// const classes = useStyles();
-
-// this.socket.on('loginStatus', ({status, msg}) => {
-//       console.log(status);
-//       if(status === 'Fail'){
-//         console.log(msg);
-//       }else if(status === 'Success'){
-//         this.props.handleLogin(msg);
-//       }
-//     })
-
-function login() {
+function login(status) {
+  console.log(status);
   if (state) {
-    return (<li><a href="/user">Profile</a></li>)
+    let href = "/users/" + state;
+    return (<li><a href={href}>{status}</a></li>)
   } else {
-    return (<li><a href="/user">Login</a></li>)
+    return (<li><a href="/login">{status}</a></li>)
   }
 }
-
-// const connectWebSocket = () => {
-//   console.log("connectWebSocket");
-    //開啟
-  // setSocket(io('http://localhost:3001'))
-// }
-
-// const socket = io.connect(endpoint);
-//   // console.log("TopNav");
-//   socket.on('loginStatus', ({status, msg}) => {
-//       console.log(status);
-//       if(status === 'Fail'){
-//         console.log(msg);
-//       }else if(status === 'Success'){
-//         // this.props.handleLogin(msg);
-//       }
-//     })
 
 const TopNav = e => {
   const classes = useStyles();
   const [open] = React.useState(false);
-  // const [socket, setSocket] = React.useState(null)
-  // console.log(open);
-  // console.log(socket);
-  // console.log(setSocket);
-  // const connectWebSocket = () => {
-  //   console.log("connectWebSocket");
-  //   //開啟
-  //   setSocket(io('http://localhost:3001'))
-  // }
-  // console.log("im here");
+  const [loginStatus, updateStatus] = React.useState("Login");
+  const [href, updateHref] = React.useState("/login");
+  if (state) {
+    show = "Profile";
+  }
+
   console.log(e.socket);
   useEffect(() => {
     if(e.socket){
-    //連線成功在 console 中打印訊息
+      //連線成功在 console 中打印訊息
       console.log('success connect!')
       //設定監聽
       initWebSocket()
@@ -197,8 +165,23 @@ const TopNav = e => {
 
   const initWebSocket = () => {
     //對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
-    e.socket.on('getMessage', message => {
-      console.log(message)
+    e.socket.on('loginStatus', ({status, msg}) => {
+      console.log("in TopNav.js")
+      console.log(status);
+      if(status === 'Fail') {
+        console.log(msg);
+      } else if (status === 'Success') {
+        updateStatus("Profile");
+        let href = "/users/" + Cookie.get('user');
+        updateHref(href);
+      }
+    })
+    e.socket.on('logoutStatus', () => {
+      console.log("logout in TopNav.js");
+      show = "";
+      updateStatus("Login");
+      updateHref("/login");
+      window.location.href = "http://localhost:3000/login";
     })
   }
   return (
@@ -210,7 +193,6 @@ const TopNav = e => {
             [classes.appBarShift]: open,
           })}
         >
-           
           <Toolbar style={{marginLeft: '100px'}}>
             <Typography className={classes.title} variant="h6" noWrap style={{marginTop: '6px'}}>
               <a className="EatingDiary" href="/">Eating Diary</a>
@@ -230,7 +212,7 @@ const TopNav = e => {
             </div> 
             <div id="nav">
               <ul>
-                {login()}
+                {login(show || loginStatus)}
               </ul>
             </div>       
           </Toolbar>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Redirect } from 'react-router-dom';
 import io from 'socket.io-client'
 
 import "./Login.css"
@@ -10,17 +11,17 @@ class Login extends Component{
 		super(props);
 		this.state = {
 			name: "",
-			password: ""
+			password: "",
+			href: ""
 		}
 		this.socket = io.connect(endpoint);
-		// console.log(this.socket);
 		this.socket.on('loginStatus', ({status, msg}) => {
-			console.log("in Login.js")
-			console.log(status);
 			if(status === 'Fail'){
 				console.log(msg);
 			}else if(status === 'Success'){
 				this.props.handleLogin(msg);
+				let href = "/users/" + msg;
+				this.setState({href: href});
 			}
 		})
 	}
@@ -29,12 +30,18 @@ class Login extends Component{
 		ret[e.target.id] = e.target.value;
 		this.setState(ret);
 	}
+	
 	login = (e) => {
 		e.preventDefault();
 		if(!this.state.name || !this.state.password) return;
 		this.socket.emit('login', {'name': this.state.name, 'password': this.state.password});
 	}
+
 	render(){
+		if (this.state.href) {
+			return (
+				<Redirect push to={this.state.href}/>)
+		}
 		return(
 			<div className="container" style={{padding: '0 50px 0 100px'}}>
 				<form onSubmit={this.login}>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Cookie from 'js-cookie'
 // import Home from './Home'
 import Profile from './Profile'
@@ -28,9 +29,6 @@ class Auth extends Component{
 		this.setState({user: Cookie.get('user')});
 	}
 	render(){
-		if(this.state.user){
-			return <Profile handleLogout={this.logout} socket={this.socket}/>
-		}
 		return(
 			<div className="content">
 				<Login handleLogin={this.login} />
