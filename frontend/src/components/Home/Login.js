@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import io from 'socket.io-client'
+
+import "./Login.css"
+
 var endpoint = 'http://localhost:3001'
 
 class Login extends Component{
@@ -10,7 +13,9 @@ class Login extends Component{
 			password: ""
 		}
 		this.socket = io.connect(endpoint);
+		// console.log(this.socket);
 		this.socket.on('loginStatus', ({status, msg}) => {
+			console.log("in Login.js")
 			console.log(status);
 			if(status === 'Fail'){
 				console.log(msg);
@@ -31,7 +36,7 @@ class Login extends Component{
 	}
 	render(){
 		return(
-			<div className="container" style={{marginTop: '15px'}}>
+			<div className="container" style={{padding: '0 50px 0 100px'}}>
 				<form onSubmit={this.login}>
                     <div className="form-group">
                         <label>User Name: </label>

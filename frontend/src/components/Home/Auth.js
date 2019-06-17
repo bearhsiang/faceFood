@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Cookie from 'js-cookie'
-import Home from './Home'
+// import Home from './Home'
+import Profile from './Profile'
 import Login from './Login'
 import io from 'socket.io-client'
 import Signup from './Signup'
@@ -28,7 +29,7 @@ class Auth extends Component{
 	}
 	render(){
 		if(this.state.user){
-			return <Home handleLogout={this.logout}/>
+			return <Profile handleLogout={this.logout} socket={this.socket}/>
 		}
 		return(
 			<div className="content">

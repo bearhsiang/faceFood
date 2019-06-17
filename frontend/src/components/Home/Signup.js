@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 // import { timingSafeEqual } from 'crypto';
 import io from 'socket.io-client'
+
+import "./Login.css"
+
 const endpoint = 'http://localhost:3001'
 class Signup extends Component{
 	constructor(props){
@@ -53,7 +56,7 @@ class Signup extends Component{
 	render(){
 
 		return(
-			<div className="container" style={{marginTop: '15px'}}>
+			<div className="container" style={{right: '0px', padding: '0 100px 0 50px'}}>
 				<form onSubmit={this.signup}>
                     <div className="form-group">
                         <label>User Name: </label>

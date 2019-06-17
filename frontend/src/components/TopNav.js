@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import clsx from 'clsx';
+import Cookie from 'js-cookie';
+// import io from 'socket.io-client'
 
 import { makeStyles, fade } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,9 +11,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-import "./FoodSearch.css";
-import Users from './User/Users';
 
+import "./FoodSearch.css";
+// import classes from "./TopNav.css";
+
+import Users from './User/Users';
 import MenuList from './Menu/todos-list';
 import CreateList from './Menu/create-todo';
 import EditList from './Menu/edit-todo';
@@ -128,14 +132,78 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function TopNav() {
+const state = Cookie.get('user');
+// var endpoint = 'http://localhost:3001'
+// var setSocket;
+
+// const classes = useStyles();
+
+// this.socket.on('loginStatus', ({status, msg}) => {
+//       console.log(status);
+//       if(status === 'Fail'){
+//         console.log(msg);
+//       }else if(status === 'Success'){
+//         this.props.handleLogin(msg);
+//       }
+//     })
+
+function login() {
+  if (state) {
+    return (<li><a href="/user">Profile</a></li>)
+  } else {
+    return (<li><a href="/user">Login</a></li>)
+  }
+}
+
+// const connectWebSocket = () => {
+//   console.log("connectWebSocket");
+    //開啟
+  // setSocket(io('http://localhost:3001'))
+// }
+
+// const socket = io.connect(endpoint);
+//   // console.log("TopNav");
+//   socket.on('loginStatus', ({status, msg}) => {
+//       console.log(status);
+//       if(status === 'Fail'){
+//         console.log(msg);
+//       }else if(status === 'Success'){
+//         // this.props.handleLogin(msg);
+//       }
+//     })
+
+const TopNav = e => {
   const classes = useStyles();
   const [open] = React.useState(false);
+  // const [socket, setSocket] = React.useState(null)
+  // console.log(open);
+  // console.log(socket);
+  // console.log(setSocket);
+  // const connectWebSocket = () => {
+  //   console.log("connectWebSocket");
+  //   //開啟
+  //   setSocket(io('http://localhost:3001'))
+  // }
+  // console.log("im here");
+  console.log(e.socket);
+  useEffect(() => {
+    if(e.socket){
+    //連線成功在 console 中打印訊息
+      console.log('success connect!')
+      //設定監聽
+      initWebSocket()
+    }
+  },[e.socket])
 
+  const initWebSocket = () => {
+    //對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
+    e.socket.on('getMessage', message => {
+      console.log(message)
+    })
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Router>
         <AppBar
           position="fixed"
           className={clsx(classes.appBar, {
@@ -161,23 +229,14 @@ function TopNav() {
               />
             </div> 
             <div id="nav">
-            <ul>
-                <li><a href="/profile">Profile</a></li>
+              <ul>
+                {login()}
               </ul>
             </div>       
           </Toolbar>
         </AppBar>
-        <Switch>
-          {/* <Route path="/" exact component={FoodSearch} /> */}
-          <Route path='/' exact component={MenuList} />
-          <Route path="/profile" component={Auth} />
-          <Route path="/record" component={MenuList} />
-          <Route path="/create" component={CreateList} />
-          <Route path="/edit/:id" component={EditList} />
-        </Switch>
-      </Router>
     </div>
-  );
+    );
 }
 
 export default TopNav;

@@ -23,32 +23,31 @@ export default function BottomNav() {
   const [value, setValue] = React.useState(0);
   console.log('bottomnav create');
   return (
-  <div style={{marginTop: '3em', position:'relative'}}>
-  <Router>
-    {/* <BottomNavigation
-      style={{margin: 'auto', height: '100%', width:'100%'}}
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-      showLabels
-      className={classes.root}
-    >
-      <BottomNavigationAction component={Link} to='/' label="Home" icon={<HomeIcon />} />
-      <BottomNavigationAction component={Link} to="/record" label="Favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction component={Link} to="/create"label="Nearby" icon={<LocationOnIcon />} />
-    </BottomNavigation> */}
+    <div style={{marginTop: '3em', position:'relative'}}>
+      <Router>
+        {/* <BottomNavigation
+          style={{margin: 'auto', height: '100%', width:'100%'}}
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          showLabels
+          className={classes.root}
+        >
+          <BottomNavigationAction component={Link} to='/' label="Home" icon={<HomeIcon />} />
+          <BottomNavigationAction component={Link} to="/record" label="Favorites" icon={<FavoriteIcon />} />
+          <BottomNavigationAction component={Link} to="/create"label="Nearby" icon={<LocationOnIcon />} />
+        </BottomNavigation> */}
 
-    {/* <Switch>
-          <Route path="/" exact component={FoodSearch} />
-          <Route path='/' exact component={Auth} />
-          <Route path="/record" component={MenuList}></Route>
-          <Route path="/create" component={CreateList}></Route>
-          <Route path="/edit/:id" component={EditList} />
-        </Switch> */}
-  </Router>
-  
-  </div>
+        {/* <Switch>
+              <Route path="/" exact component={FoodSearch} />
+              <Route path='/' exact component={Auth} />
+              <Route path="/record" component={MenuList}></Route>
+              <Route path="/create" component={CreateList}></Route>
+              <Route path="/edit/:id" component={EditList} />
+            </Switch> */}
+      </Router>
     
+    </div>
   );
 }
