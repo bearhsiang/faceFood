@@ -27,7 +27,7 @@ export default class UsersList extends Component {
             <div className="UsersList">
             {
                 this.state.otherusers.map((user, id) => {
-                    return <Users key={id} user={user} socket={this.socket} />
+                    return <Users key={id} user={user} />
                 })
             }
             </div>
