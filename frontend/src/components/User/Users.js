@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './UsersList.css';
+import io from 'socket.io-client';
+import Cookie from 'js-cookie';
 
 export default class Users extends Component {
     constructor(props) {
@@ -8,12 +10,18 @@ export default class Users extends Component {
         this.state = {
             image: ''
         }
-        this.socket = this.props.socket;
-        this.socket.emit('getImgByID', this.props.user.figure);
+        
+        this.user = this.props.user;
+        this.socket = io.connect('http://localhost:3001');
+        this.socket.emit('getUsers', this.user);
+
+        this.socket.emit('getImgByID', this.user.figure);
         this.socket.on('img', image => {
             this.setState({image: image})
         });
+       
     }
+
     render() {
         return (
             <div className="Users">
