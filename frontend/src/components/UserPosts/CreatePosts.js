@@ -76,7 +76,7 @@ export default class CreatePosts extends Component {
             photo: this.state.photo,
             rate: this.state.rate
         };
-        this.socket.emit('createpost', newpost);
+        this.socket.emit('createPost', newpost);
     }
 
     render() {
