@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Button } from 'react-floating-action-button';
 import Bot from './Bot';
 import { relative } from 'path';
+import CreatePosts from './UserPosts/CreatePosts';
 
 class BotBtn extends Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class BotBtn extends Component {
         }
     }
     handleClick() {
+        console.log('masuk');
         this.setState({ openBot: !this.state.openBot})
     }
 
@@ -19,7 +21,7 @@ class BotBtn extends Component {
         return (
             <div> 
                 
-                <div style={{position: 'absolute', marginLeft: '95em', marginTop: '55em'}}>
+                <div style={{position: 'absolute', marginLeft: '85em', marginTop: '30em'}}>
                     <Button
                     tooltip="The Bot will help you!"
                     rotate={false}
@@ -30,9 +32,10 @@ class BotBtn extends Component {
                     </svg>                
                     </Button>
                 </div>
-                <div style={{display: this.state.openBot === true ? "block" : "none", position: 'absolute', marginLeft: '72em', marginTop: '23em'}}>
-                    <Bot openBot={this.state.openBot} />
+                <div style={{display: this.state.openBot === true ? "block" : "none", position: 'absolute', marginLeft: '60em'}}>
+                    <CreatePosts  />
                 </div>
+               
                 
                
             </div>

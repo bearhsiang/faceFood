@@ -9,8 +9,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-
 import "./FoodSearch.css";
+import Users from './User/Users';
 
 import MenuList from './Menu/todos-list';
 import CreateList from './Menu/create-todo';
