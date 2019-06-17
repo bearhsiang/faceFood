@@ -83,6 +83,7 @@ io.on('connection', function(socket){
         let photo_id_list = photolist.map(photo => {
             let photo_id = uuidv4;
             storeImg(photo_id, photo);
+            return photo_id;
         })
         db.posts.push({
             id: post_id,
