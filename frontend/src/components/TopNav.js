@@ -181,7 +181,7 @@ const TopNav = e => {
       show = "";
       updateStatus("Login");
       updateHref("/login");
-      window.location.href = "http://localhost:3000/login";
+      window.location.href = "http://localhost:3000";
     })
   }
   return (
