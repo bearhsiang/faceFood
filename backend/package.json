@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server.js --exec babel-node"
+    "server": "nodemon server.js --exec babel-node",
+    "online": "nodemon online_server.js --exec babel-node"
   },
   "keywords": [],
   "author": "",
