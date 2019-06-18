@@ -85,8 +85,6 @@ export default class CreatePosts extends Component {
             rate: 2.5,
             redirect: !this.state.redirect
         }
-
-        console.log(this.state.name);
     }
 
     render() {
