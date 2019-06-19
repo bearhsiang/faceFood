@@ -4,7 +4,7 @@ import './BotBtn.css';
 import CreatePosts from './UserPosts/CreatePosts';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 const popover = (
-    <Popover id="popover-basic" title="Create Post" style={{marginTop: '2em', maxWidth: '850px', height: '600px'}}>     
+    <Popover id="popover-basic" title="Create Post" style={{maxWidth: '850px', height: '600px'}}>     
         <CreatePosts />
     </Popover>
 );
@@ -24,7 +24,7 @@ class BotBtn extends Component {
     render() {
         return (
             <OverlayTrigger trigger="click" placement="left" overlay={popover}>
-                <Button variant="success" styles={{marginTop: '10em',marginLeft: '40em', backgroundColor: '#3f51b5', color: 'white',fontSize: '36px'}}>+</Button>
+                <Button variant="success" styles={{position: 'absolute', marginTop: '-5em', marginLeft: '40em', backgroundColor: '#3f51b5', color: 'white',fontSize: '36px'}}>+</Button>
             </OverlayTrigger> 
         );
     }
