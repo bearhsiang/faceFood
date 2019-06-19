@@ -31,7 +31,6 @@ class App extends Component {
             <Route path="/" exact component={UsersList}/>
             <Route path='/login' component={Auth}/>
             <Route path='/users/:id' exact component={Profile}/>
-            <Route path='/users/:id/create' component={CreatePost}/>
             {/* <Route path="/record" component={MenuList}></Route> */}
             {/* <Route path="/create" component={CreateList}></Route> */}
             {/* <Route path="/edit/:id" component={EditList}/> */}

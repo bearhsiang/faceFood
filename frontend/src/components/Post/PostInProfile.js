@@ -11,23 +11,26 @@ export default class Post extends Component {
             image: []
         }
         this.socket = io.connect('http://localhost:3001');
-        // this.socket.emit('getUsers', this.user);
-        // this.props.post.photolist.map((photoID) => {
-        // 	this.socket.emit('getImgByID', photoID);
-        // })
-        // this.socket.on('img', image => {
-        // 	this.setState(state => {
-        // 		state.image.push(image);
-	       //  	return {state};
-	       //  });
-        // })
+        // console.log(this.props.post);
+        this.props.post.photo.map((photoID) => {
+        	this.socket.emit('getImgByID', photoID);
+        })
+        this.socket.on('img', image => {
+        	this.setState(state => {
+        		state.image.push(image);
+	        	return {state};
+	        });
+        })
+        console.log(this.state.image);
+
     }
 
     render() {
+    	console.log(this.state.image);
         return (
             <ul id={this.props.key}>
             	<li><h4>{this.props.post.name}</h4></li>
-            	<li><img src={this.props.image} alt="image1" width="270" /></li>
+            	<li><img src={this.state.image[0]} alt="image1" width="270" /></li>
             	<li>{this.props.post.text}</li>
             	<li>{this.props.post.location}</li>
             	<li><a href="#">Read More</a></li>
