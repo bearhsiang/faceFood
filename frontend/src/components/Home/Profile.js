@@ -15,8 +15,9 @@ var endpoint = 'http://localhost:3001'
 class Profile extends Component{
 	constructor(props){
 		super(props);
-		this.state = {user: Cookie.get('user'),
-					  posts: []};
+		this.state = {
+			user: Cookie.get('user'),
+			posts: []};
 		this.socket = io.connect(endpoint);
 		this.socket.emit('getPostsByUser', this.state.user);
 		this.socket.on('setCookie', data => {
@@ -41,7 +42,7 @@ class Profile extends Component{
 			        <div className="content-bottom-inner">
 			        {
 			        	this.state.posts.map((post, id) => {
-			        		console.log(post);
+			        		console.log("post");
 			        		return (
 			        			<Post key={id} post={post} />
 			        			)
