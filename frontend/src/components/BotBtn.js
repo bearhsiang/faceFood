@@ -24,7 +24,7 @@ class BotBtn extends Component {
     render() {
         return (
             <OverlayTrigger trigger="click" placement="left" overlay={popover}>
-                <Button variant="success" styles={{position: 'absolute', marginTop: '-5em', marginLeft: '40em', backgroundColor: '#3f51b5', color: 'white',fontSize: '36px'}}>+</Button>
+                <Button variant="success" styles={{position: 'static', marginTop: '-5em', marginLeft: '40em', backgroundColor: '#3f51b5', color: 'white',fontSize: '36px'}}>+</Button>
             </OverlayTrigger> 
         );
     }
