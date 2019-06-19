@@ -7,7 +7,7 @@ import io from 'socket.io-client'
 import "./Login.css"
 
 import BotBtn from '../BotBtn';
-import Post from '../Post/Post in Profile'
+import Post from '../Post/PostInProfile'
 // import CreatePost from "../UserPosts/CreatePosts"
 
 var endpoint = 'http://localhost:3001'
@@ -26,12 +26,7 @@ class Profile extends Component{
         this.socket.on('posts', data => {
         	this.setState({ posts: data})
         });
-	}
-	createPost = () => {
-		// console.log("createPost");
-		let href = '/users/' + this.state.user + '/create';
-		// console.log(href);
-		window.location = href;
+        
 	}
 	logout = () => {
 		Cookie.remove('user');
@@ -46,6 +41,7 @@ class Profile extends Component{
 			        <div className="content-bottom-inner">
 			        {
 			        	this.state.posts.map((post, id) => {
+			        		console.log(post);
 			        		return (
 			        			<Post key={id} post={post} />
 			        			)
@@ -76,10 +72,6 @@ class Profile extends Component{
 			        </div>
 			 
 				</div>
-				
-	            <button className="btn" onClick={this.createPost} style={{backgroundColor: '#3f51b5', color: 'white'}} >
-					Add post
-				</button>
 				
 				<button className="btn" onClick={this.logout} style={{backgroundColor: '#3f51b5', color: 'white'}} >
 					Logout
