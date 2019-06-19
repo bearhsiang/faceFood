@@ -1,34 +1,34 @@
-import db from './fake_db'
-import { addCatchUndefinedToSchema } from 'graphql-tools';
+// import db from './fake_db'
+// import { addCatchUndefinedToSchema } from 'graphql-tools';
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var port = 3001;
 var fs = require('fs');
-var uuidv4 = require('uuid/v4');
+// var uuidv4 = require('uuid/v4');
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const Post = require('./models/Post')
 const Img = require('./models/Img');
 
 // from https://stackoverflow.com/questions/20267939/nodejs-write-base64-image-file
-var storeImg = (filename, dataString) => {
-    let matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+// var storeImg = (filename, dataString) => {
+//     let matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
 
-    if (matches.length !== 3) {
-        return new Error('Invalid input string');
-    }
+//     if (matches.length !== 3) {
+//         return new Error('Invalid input string');
+//     }
 
-    // let type = matches[1];
-    let data = matches[2];
-    let out = `${filename}.png`;
-    fs.writeFile(out, data, {encoding:'base64'}, err => {
-        if(err)
-            console.log(err);
-        else
-            console.log(`write to ${out}`);
-    });
-}
+//     // let type = matches[1];
+//     let data = matches[2];
+//     let out = `${filename}.png`;
+//     fs.writeFile(out, data, {encoding:'base64'}, err => {
+//         if(err)
+//             console.log(err);
+//         else
+//             console.log(`write to ${out}`);
+//     });
+// }
 mongoose.connect('mongodb+srv://hsiang:test@cluster0-q7gvp.gcp.mongodb.net/test?retryWrites=true', {
     useNewUrlParser: true
 })
