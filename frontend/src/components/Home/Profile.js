@@ -25,7 +25,8 @@ class Profile extends Component{
 			this.setState({user: Cookie.get('user')});
 		})
         this.socket.on('posts', data => {
-        	this.setState({ posts: data})
+			this.setState({ posts: data})
+			console.log(data);
         });
         
 	}

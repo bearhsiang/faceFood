@@ -7,6 +7,9 @@ const postSchema = new Schema({
 	// 	type: String,
 	// 	required: [true, 'id field is required.']
 	// },
+	author: {
+		type: Schema.Types.ObjectId,
+	},
 	name: {
 		type: String,
 		default: 'Food'
@@ -31,7 +34,7 @@ const postSchema = new Schema({
 		type: String,
 		default: 'Somewhere'
 	},
-	photolist: {
+	photo: {
 		type: [Schema.Types.ObjectId],
 		// required: [true, 'photolist field is required.']
 	},

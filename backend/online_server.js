@@ -109,7 +109,9 @@ online_db.once('open', () => {
             });
         });
         socket.on('getPostsByUser', user_id => {
-            Post.find({author: user_id}, '_id', (err, posts) => {
+            Post.find({author: user_id}, (err, posts) => {
+                console.log(user_id);
+                console.log(posts);
                 let posts_id_list = posts.map(post => post._id);
                 socket.emit('posts', posts_id_list);
             })
@@ -148,7 +150,7 @@ online_db.once('open', () => {
                     d: d,
                     text: text,
                     location: location,
-                    photolist: imgs.map(img => img._id),
+                    photo: imgs? imgs.map(img => img._id):[],
                     rate: rate,
                 }
                 Post.create(newPost, (err, post) => {
