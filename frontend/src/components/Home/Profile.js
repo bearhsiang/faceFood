@@ -75,14 +75,17 @@ class Profile extends Component{
 			            <div className="clear"></div>
 			        </div>
 			 
-			    </div>
+				</div>
+				
 	            <button className="btn" onClick={this.createPost} style={{backgroundColor: '#3f51b5', color: 'white'}} >
 					Add post
 				</button>
+				
 				<button className="btn" onClick={this.logout} style={{backgroundColor: '#3f51b5', color: 'white'}} >
 					Logout
 				</button>
 				<BotBtn />
+				
 	        </div>
 		)
 	}
