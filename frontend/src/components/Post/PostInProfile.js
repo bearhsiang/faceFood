@@ -28,7 +28,7 @@ export default class Post extends Component {
     render() {
     	console.log(this.state.image);
         return (
-            <ul id={this.props.key}>
+            <ul id={this.props._id}>
             	<li><h4>{this.props.post.name}</h4></li>
             	<li><img src={this.state.image[0]} alt="image1" width="270" /></li>
             	<li>{this.props.post.text}</li>

@@ -17,16 +17,16 @@ class Profile extends Component{
 		super(props);
 		this.state = {
 			user: Cookie.get('user'),
-			posts: []};
+			posts: []
+		};
 		this.socket = io.connect(endpoint);
 		this.socket.emit('getPostsByUser', this.state.user);
-		this.socket.on('setCookie', data => {
-			Cookie.set('user', data);
-			this.setState({user: Cookie.get('user')});
-		})
+		// this.socket.on('setCookie', data => {
+		// 	Cookie.set('user', data);
+		// 	this.setState({user: Cookie.get('user')});
+		// })
         this.socket.on('posts', data => {
 			this.setState({ posts: data})
-			console.log(data);
         });
         
 	}
@@ -42,11 +42,11 @@ class Profile extends Component{
 				<div id="content-bottom">
 			        <div className="content-bottom-inner">
 			        {
-			        	this.state.posts.map((post, id) => {
+			        	this.state.posts.map((post, _id) => {
 			        		console.log("post");
 			        		return (
-			        			<Post key={id} post={post} />
-			        			)
+			        			<Post key={_id} post={post} id={_id}/>
+			        		)
 		                })
 			        }
 			            <ul>

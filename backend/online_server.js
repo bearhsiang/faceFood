@@ -110,10 +110,11 @@ online_db.once('open', () => {
         });
         socket.on('getPostsByUser', user_id => {
             Post.find({author: user_id}, (err, posts) => {
-                console.log(user_id);
-                console.log(posts);
+                // console.log(posts);
                 let posts_id_list = posts.map(post => post._id);
-                socket.emit('posts', posts_id_list);
+                // console.log(posts_id_list);
+                // socket.emit('posts', posts_id_list);
+                socket.emit('posts', posts);
             })
         });
         socket.on('getPostByID', post_id => {
