@@ -9,10 +9,10 @@ class Signup extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			name: "",
-			password: "",
-			email:"",
-			figure:"",
+			name: '',
+			password: '',
+			email: '',
+			figure: '',
 			imgdata: '',
 			// tmpURL: '',
 		}
@@ -38,7 +38,13 @@ class Signup extends Component{
 		e.preventDefault();
 		if(!this.state.name || !this.state.password || !this.state.email ) return;
 		this.socket.emit('signup', {'name': this.state.name, 'password': this.state.password, 'email':this.state.email, 'figure': this.state.imgdata});
-		console.log(this.state);
+		this.setState({
+			name: '',
+			password: '',
+			email: '',
+			figure: '',
+			imgdata: '',
+		})
 	}
 	changeFigure = (e) => {
 		e.preventDefault();
@@ -89,13 +95,13 @@ class Signup extends Component{
                     </div>
 
 					<div className="form-group">
-                        <label>Figure</label>
+                        <label />Figure
 						<input  id='figure'
-								type="file"
+								type='file'
 								className='form-control'
 								onChange={this.changeFigure}
                         />
-                    </div>
+					</div>
 
                     <div className="form-group">
                         <input type="submit" value="Sign Up" className="btn" style={{backgroundColor: '#3f51b5', color: 'white'}}/>

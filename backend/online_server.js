@@ -99,7 +99,7 @@ online_db.once('open', () => {
                 }
             });
         });
-        socket.on('getUsers', (id) => {
+        socket.on('getUsers', () => {
             User.find({}, (err, users) => {
                 if(err){
                     console.log(err);
@@ -132,30 +132,34 @@ online_db.once('open', () => {
                 socket.emit('img', buffer);
             })
         })
-        socket.on('createPost', ({author, name, date, text, location, photo, rate}) => {
-            Img.create(photo,(err, res) => {
-                console.log(res);
+        socket.on('createPost', ({author, name, y, m, d, text, location, photo, rate}) => {
+            let buf_list = photo.map(buf => ({buffer: buf}));
+            Img.create(buf_list, (err, imgs) => {
+                if(err){
+                    console.log('img');
+                    console.log(err);
+                    return;
+                }
+                let newPost = {
+                    author: author,
+                    name: name,
+                    y: y,
+                    m: m,
+                    d: d,
+                    text: text,
+                    location: location,
+                    photolist: imgs.map(img => img._id),
+                    rate: rate,
+                }
+                Post.create(newPost, (err, post) => {
+                    if(err){
+                        console.log('post');
+                        console.log(err);
+                        return
+                    }
+                    console.log(post);
+                })
             })
-            let photo_id_list = photo.map(img => {
-                let photo_id = uuidv4();
-                storeImg(photo_id, img);
-                return photo_id;
-            });
-            console.log(photo_id_list);
-            let newpost = {
-                id: post_id,
-                author: author,
-                name: name,
-                y: y,
-                m: m,
-                d: d,
-                text: text,
-                location: location,
-                photo: photo_id_list,
-                rate: rate,
-            }
-            // console.log(newpost);
-            db.posts.push(newpost);
         })
     });
 });

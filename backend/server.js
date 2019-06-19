@@ -103,7 +103,7 @@ io.on('connection', function(socket){
             photo: photo_id_list,
             rate: rate,
         }
-        // console.log(newpost);
+        console.log(newpost);
         db.posts.push(newpost);
     })
 

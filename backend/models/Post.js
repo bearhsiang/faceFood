@@ -11,9 +11,17 @@ const postSchema = new Schema({
 		type: String,
 		default: 'Food'
 	},
-	date: {
-		type: Date,
-		default: Date.now
+	y:{
+		type: Number,
+		required: [true, 'y is required']
+	},
+	m:{
+		type: Number,
+		required: [true, 'm is required']
+	},
+	d:{
+		type: Number,
+		required: [true, 'd is required']
 	},
 	text: {
 		type: String,

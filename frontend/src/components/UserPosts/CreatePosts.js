@@ -73,8 +73,8 @@ export default class CreatePosts extends Component {
         };
         console.log(newpost);
         this.socket.emit('createPost', newpost);
-        this.setState = {
-            author: Cookie.get('user'),
+        this.setState({
+            // author: Cookie.get('user'),
             name: '',
             y: today.getFullYear(),
             m: today.getMonth()+1,
@@ -84,7 +84,7 @@ export default class CreatePosts extends Component {
             photo: [],
             rate: 2.5,
             redirect: !this.state.redirect
-        }
+        })
     }
 
     render() {
