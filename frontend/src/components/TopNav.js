@@ -135,7 +135,6 @@ const state = Cookie.get('user');
 var show = "";
 
 function login(status) {
-  console.log(status);
   if (state) {
     let href = "/users/" + state;
     return (<li><a href={href}>{status}</a></li>)
@@ -152,8 +151,6 @@ const TopNav = e => {
   if (state) {
     show = "Profile";
   }
-
-  console.log(e.socket);
   useEffect(() => {
     if(e.socket){
       //連線成功在 console 中打印訊息
@@ -166,8 +163,6 @@ const TopNav = e => {
   const initWebSocket = () => {
     //對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
     e.socket.on('loginStatus', ({status, msg}) => {
-      console.log("in TopNav.js")
-      console.log(status);
       if(status === 'Fail') {
         console.log(msg);
       } else if (status === 'Success') {
@@ -177,7 +172,6 @@ const TopNav = e => {
       }
     })
     e.socket.on('logoutStatus', () => {
-      console.log("logout in TopNav.js");
       show = "";
       updateStatus("Login");
       updateHref("/login");
@@ -192,6 +186,7 @@ const TopNav = e => {
           className={clsx(classes.appBar, {
             [classes.appBarShift]: open,
           })}
+          style={{backgroundColor: '#f39823'}}
         >
           <Toolbar style={{marginLeft: '100px'}}>
             <Typography className={classes.title} variant="h6" noWrap style={{marginTop: '6px'}}>

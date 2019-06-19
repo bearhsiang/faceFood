@@ -5,12 +5,13 @@ import webSocket from 'socket.io-client'
 import TopNav from '../../components/TopNav';
 // import BotBtn from '../../components/BotBtn';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import MenuList from '../../components/Menu/todos-list';
-import CreateList from '../../components/Menu/create-todo';
-import EditList from '../../components/Menu/edit-todo';
+// import MenuList from '../../components/Menu/todos-list';
+// import CreateList from '../../components/Menu/create-todo';
+// import EditList from '../../components/Menu/edit-todo';
 import Auth from '../../components/Home/Auth';
 import UsersList from '../../components/User/UsersList';
 import Profile from '../../components/Home/Profile';
+import CreatePost from '../../components/UserPosts/CreatePosts';
 
 class App extends Component {
   constructor(props) {
@@ -28,10 +29,11 @@ class App extends Component {
           <Switch>
             {/* <Route path="/" exact component={FoodSearch} /> */}
             <Route path='/login' component={Auth}/>
-            <Route path='/users/' component={Profile}/>
-            <Route path="/record" component={MenuList}></Route>
-            <Route path="/create" component={CreateList}></Route>
-            <Route path="/edit/:id" component={EditList}/>
+            <Route path='/users/:id' exact component={Profile}/>
+            <Route path='/users/:id/create' component={CreatePost}/>
+            {/* <Route path="/record" component={MenuList}></Route> */}
+            {/* <Route path="/create" component={CreateList}></Route> */}
+            {/* <Route path="/edit/:id" component={EditList}/> */}
             <Route path="/" exact component={UsersList}/>
             <Route path="/:id/wanted" component={UsersList}/>
           </Switch>
