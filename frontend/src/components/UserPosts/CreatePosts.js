@@ -92,17 +92,23 @@ export default class CreatePosts extends Component {
             <div style={{height: '600px', width: '300px'}}>
                 <form onSubmit={this.onSubmitHandler}  style={{margin:'auto 1em'}}>
                     <Form.Group as={Row} controlId="formName">
-                        <label>Name</label>
+                        <label>Restaurant</label>
                         <input
                             type="text"
-                            className="form-control"
-                            placeholder="Enter user's name"
+                            className="form-control"                            
                             value={this.state.name}
                             onChange={e => this.setState({ name: e.target.value})}
                         />
-                        <Form.Text className="text-muted">
-                            Your name will be publicly shared.
-                        </Form.Text>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="formLocation">
+                        <label>Address</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={this.state.location}
+                            onChange={e => this.setState({ location: e.target.value})}
+                        />
                     </Form.Group>
 
                     <Form.Group as={Row} controlId="formText">
@@ -112,16 +118,6 @@ export default class CreatePosts extends Component {
                             className="form-control"
                             value={this.state.text}
                             onChange={e => this.setState({ text: e.target.value})}
-                        />
-                    </Form.Group>
-
-                    <Form.Group as={Row} controlId="formLocation">
-                        <label>Location</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={this.state.location}
-                            onChange={e => this.setState({ location: e.target.value})}
                         />
                     </Form.Group>
 
@@ -140,8 +136,9 @@ export default class CreatePosts extends Component {
                     this.state.photo.map((url, id) => {
                         return <img key={id}  style={{height: '16.66rem', width: '16.66rem', marginBottom: '1rem', marginLeft: '-0.5rem'}} src={url} alt="preview" /> })
                     }
-
+                
                     <Form.Group as={Row} controlId="formRate">
+                        <Form.Label>Rate</Form.Label>
                         <input
                             type="range" 
                             className="custom-range"
@@ -152,10 +149,6 @@ export default class CreatePosts extends Component {
                             value={this.state.rate}
                             onChange={e => this.setState({ rate: e.target.value})}
                         />
-                    </Form.Group>
-                
-                    <Form.Group as={Row} controlId="formBasicChecbox">
-                        <Form.Check type="checkbox" label="Agree" />
                     </Form.Group>
                     <Button variant="primary" type="submit" style={{marginBottom: '1em'}}>
                         Submit
