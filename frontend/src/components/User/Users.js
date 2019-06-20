@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './UsersList.css';
 import io from 'socket.io-client';
-import Cookie from 'js-cookie';
 
 export default class Users extends Component {
     constructor(props) {
@@ -12,8 +11,8 @@ export default class Users extends Component {
         }
         
         this.user = this.props.user;
+        console.log(this.user);
         this.socket = io.connect('http://localhost:3001');
-        this.socket.emit('getUsers', this.user);
 
         this.socket.emit('getImgByID', this.user.figure);
         this.socket.on('img', image => {
@@ -27,7 +26,7 @@ export default class Users extends Component {
             <div className="Users">
                 <img  className="image-container" src={this.state.image} alt={this.props.user.name}/>
                 <div className="UsersInformation">
-                    <Link to={`/${this.props.user.wantlist}/wanted`} style={{color: 'black',textDecoration: 'none'}}><h2>{this.props.user.name}</h2></Link>
+                    <Link to={`/users/${this.user._id}`} style={{color: 'black',textDecoration: 'none'}}><h2>{this.props.user.name}</h2></Link>
                     <p>{this.props.user.email}</p>
                 </div>
             </div>
