@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Cookie from 'js-cookie'
 import io from 'socket.io-client'
 
