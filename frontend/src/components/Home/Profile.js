@@ -15,8 +15,9 @@ var endpoint = 'http://localhost:3001'
 class Profile extends Component{
 	constructor(props){
 		super(props);
+
 		this.state = {
-			user: Cookie.get('user'),
+			user: this.props.match.params.id,
 			posts: []
 		};
 		this.socket = io.connect(endpoint);
@@ -75,10 +76,13 @@ class Profile extends Component{
 			 
 				</div>
 				
+				
 				<button className="btn" onClick={this.logout} style={{backgroundColor: '#3f51b5', color: 'white'}} >
 					Logout
 				</button>
-				<BotBtn />
+				<div>
+					<BotBtn/>
+				</div>
 				
 	        </div>
 		)
