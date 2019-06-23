@@ -30,7 +30,7 @@ export default class Post extends Component {
         return (
             <ul id={this.props._id}>
             	<li><h4>{this.props.post.name}</h4></li>
-            	<li><img src={this.state.image[0]} alt="image1" width="270" /></li>
+            	<li><img src={this.state.image[0]} alt="image1" width="240" /></li>
             	<li>{this.props.post.text}</li>
             	<li>{this.props.post.location}</li>
             	<li><a href="#">Read More</a></li>
