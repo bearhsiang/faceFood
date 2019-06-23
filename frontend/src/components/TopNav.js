@@ -11,7 +11,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-
 import "./FoodSearch.css";
 
 import Users from './User/Users';
@@ -133,6 +132,7 @@ const useStyles = makeStyles(theme => ({
 
 const state = Cookie.get('user');
 var show = "";
+var searchInput = "";
 
 function login(status) {
   if (state) {
@@ -148,6 +148,7 @@ const TopNav = e => {
   const [open] = React.useState(false);
   const [loginStatus, updateStatus] = React.useState("Login");
   const [href, updateHref] = React.useState("/login");
+  
   if (state) {
     show = "Profile";
   }
@@ -178,6 +179,11 @@ const TopNav = e => {
       window.location.href = "http://localhost:3000";
     })
   }
+
+  const search = (e) => {
+    console.log('Search key: ' + e.target.value);
+    // insert the socket emit and on here
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -198,13 +204,11 @@ const TopNav = e => {
               </div>
               <InputBase
                 placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
+                classes={{ root: classes.inputRoot, input: classes.inputInput }}
                 inputProps={{ 'aria-label': 'Search' }}
+                onChange={e => search(e)}
               />
-            </div> 
+            </div>
             <div id="nav">
               <ul>
                 {login(show || loginStatus)}
