@@ -38,6 +38,12 @@ class Profile extends Component{
 		let href = '/users/' + this.state.user + '/create';
 		return (
 			<div style={{marginTop: '70px'}}>
+
+				{this.state.user === Cookie.get('user') && 
+					<button className="btn" onClick={this.logout} style={{marginLeft: '2rem', backgroundColor: 'rgb(243,152,35)', color: 'white'}} >
+							Logout
+					</button>
+				}
 				<div id="content-bottom">
 			        <div className="content-bottom-inner">
 			        {
@@ -74,13 +80,7 @@ class Profile extends Component{
 			 
 				</div>
 				
-				
-				<button className="btn" onClick={this.logout} style={{backgroundColor: '#3f51b5', color: 'white'}} >
-					Logout
-				</button>
-				<div>
-					<BotBtn/>
-				</div>
+				{this.state.user === Cookie.get('user') && <BotBtn/>}
 				
 	        </div>
 		)
