@@ -12,16 +12,21 @@ class Login extends Component{
 		this.state = {
 			name: "",
 			password: "",
-			href: ""
+			href: "",
+			status: ""
 		}
 		this.socket = io.connect(endpoint);
 		this.socket.on('loginStatus', ({status, msg}) => {
 			if(status === 'Fail'){
 				console.log(msg);
+				this.setState({status: status});			
 			}else if(status === 'Success'){
 				this.props.handleLogin(msg);
 				let href = "/users/" + msg;
-				this.setState({href: href});
+				this.setState({
+					href: href,
+					status: status
+				});
 			}
 		})
 	}
@@ -35,6 +40,17 @@ class Login extends Component{
 		e.preventDefault();
 		if(!this.state.name || !this.state.password) return;
 		this.socket.emit('login', {'name': this.state.name, 'password': this.state.password});
+	}
+
+	componentDidMount() {
+		if(this.state.status == 'Fail') {
+			this.setState({
+				name: "",
+				password: "",
+				href: "",
+				status: ""
+			})
+		}
 	}
 
 	render(){
@@ -67,7 +83,8 @@ class Login extends Component{
                     
                     <div className="form-group">
                         <input type="submit" value="Login" className="btn" style={{backgroundColor: '#3f51b5', color: 'white'}}/>
-                    </div>
+					</div>
+					{(this.state.status === 'Fail') && <p style={{color: 'red'}}>The username doesn't exist. Please try again!</p>}
                 </form>
 			</div>
 		)
