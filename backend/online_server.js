@@ -191,6 +191,7 @@ online_db.once('open', () => {
                 }
             })
         })
+        // socket.on('delwant', '')
         socket.on('getWantByUser', user_id => {
             User.findById(user_id, (err, user) => {
                 if(err){
@@ -200,7 +201,7 @@ online_db.once('open', () => {
                 if(!user){
                     console.log('user not exits');
                 }
-                socket.emit('wantlist', user.wantlist);
+                socket.emit('wantlist', {id: user_id, wantlist: user.wantlist});
             })
         })
     });
