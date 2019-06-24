@@ -48,7 +48,7 @@ export default class Post extends Component {
             	<li><h4>{this.props.post.name}</h4></li>
             	<li><img src={this.state.image[0]} width="100%" /></li>
                 <li>
-                    <button className="btn" style={{padding: '0 1px'}}><Icon circular name='heart' color="red"/></button>
+                    <button className="btn" style={{padding: '0 1px'}}><Icon circular name={this.props.want} color="red"/></button>
                     {
                         this.props.user === Cookie.get('user') && 
                         <button className="btn" onClick={this.delwant} style={{padding: '0 1px'}}>

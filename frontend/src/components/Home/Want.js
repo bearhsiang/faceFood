@@ -18,33 +18,50 @@ class Profile extends Component{
 			name: "",
 			user: this.props.match.params.id,
 			want: [],
+			mywantlist: [],
 			heart: []
 		};
 		this.socket = io.connect(endpoint);
 		this.socket.emit('getUserByID', this.state.user);
 		this.socket.emit('getWantByUser', this.state.user);
-		// this.socket.emit('getWantByUser', Cookie.get('user'));
+		if (this.state.user !== Cookie.get('user')) {
+			this.socket.emit('getWantByUser', Cookie.get('user'));
+		}
 		this.socket.on('user', data => {
 			this.setState({name: data.name});
 		})
+
         this.socket.on('wantlist', data => {
-			data.map((post, _id) => {
-			    this.socket.emit('getPostByID', post);
-		    })
+        	// console.log(data);
+        	// this.socket.emit('getPostByID', "5d0a5dd7b05c84bb96651ac5");
+        	// console.log(this.state.user);
+        	if (data.id === this.state.user) {
+        		// console.log(this.state.user);
+        		// this.socket.emit('getPostByID', "5d0a5dd7b05c84bb96651ac5");
+        		// console.log("i call getPostByID");
+        		data.wantlist.map((post, _id) => {
+        			// console.log("i call getPostByID");
+				    this.socket.emit('getPostByID', post);
+			    })
+        	} else {
+        		// console.log(this.state.user);
+        		this.setState({mywantlist: data});
+    //     		this.state.want.map((post, id) => {
+				// 	this.setState(state => {
+				// 		state.heart.push(data.wantlist.indexOf(post._id));
+				// 		return state;
+				// 	});
+				// 	console.log(this.state.heart);
+				// })
+				
+        	}
         });
-   //      this.socket.on('wantlist', data => {
-			// this.state.posts.map((post, id) => {
-			// 	this.setState(state => {
-			// 		state.heart.push(data.indexOf(post._id));
-			// 		return state;
-			// 	});
-			// })
-   //      });
         this.socket.on('post', data => {
         	this.setState(state => {
         		state.want.push(data);
         		return state;
         	})
+        	// console.log("post");
         })
 	}
 j
@@ -84,15 +101,19 @@ j
 			        <div className="content-bottom-inner">
 			        {
 			        	this.state.want.map((post, _id) => {
-			        		if (post) {
-			        			var classname;
-			        			if (!(_id % 3)) {
-				        			classname = "clear";
-				        		}
-			        			return (
-				        			<Post className={classname} key={_id} post={post} id={_id} user={this.state.user}/>
-				        		)
+			        		var want = "heart", classname;
+			        		if (this.state.user !== Cookie.get('user')) {
+			        			if (this.state.mywantlist.wantlist.indexOf(post._id) < 0) {
+					       			want = "heart outline";
+					       		}
 			        		}
+				       		if (!(_id % 3)) {
+				       			classname = "clear";
+				       		}
+			       			return (
+			        			<Post className={classname} key={_id} post={post} id={_id} want={want} user={this.state.user}/>
+			        		)
+			        		// }
 				        		
 		                })
 			        }

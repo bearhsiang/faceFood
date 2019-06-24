@@ -125,6 +125,7 @@ online_db.once('open', () => {
                     return;
                 }
                 socket.emit('post', post);
+                // cnosole.log("post");
             })
         })
         socket.on('getUserByID', user_id => {
