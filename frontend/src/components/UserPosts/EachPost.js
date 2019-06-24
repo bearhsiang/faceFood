@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
-import { Jumbotron, Button } from 'react-bootstrap';
+import { Jumbotron } from 'react-bootstrap';
 import './EachPost.css';
-import { timingSafeEqual } from 'crypto';
 export default class EachPost extends Component {
     constructor(props) {
         super(props);
@@ -13,12 +12,9 @@ export default class EachPost extends Component {
             image: []
         }
         this.socket = io.connect('http://localhost:3001');
-        console.log(this.state.postID);
         this.socket.emit('getPostByID', this.state.postID);
         this.socket.on('post', data => {
-            console.log(data.photo.length);
             this.setState({ post: data });
-            
             this.state.post.photo.map((photoID) => {
                 this.socket.emit('getImgByID', photoID);
             });
