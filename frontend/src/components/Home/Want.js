@@ -17,7 +17,8 @@ class Profile extends Component{
 		this.state = {
 			name: "",
 			user: this.props.match.params.id,
-			want: []
+			want: [],
+			heart: []
 		};
 		this.socket = io.connect(endpoint);
 		this.socket.emit('getUserByID', this.state.user);
@@ -31,6 +32,14 @@ class Profile extends Component{
 			    this.socket.emit('getPostByID', post);
 		    })
         });
+   //      this.socket.on('wantlist', data => {
+			// this.state.posts.map((post, id) => {
+			// 	this.setState(state => {
+			// 		state.heart.push(data.indexOf(post._id));
+			// 		return state;
+			// 	});
+			// })
+   //      });
         this.socket.on('post', data => {
         	this.setState(state => {
         		state.want.push(data);
@@ -76,8 +85,12 @@ j
 			        {
 			        	this.state.want.map((post, _id) => {
 			        		if (post) {
+			        			var classname;
+			        			if (!(_id % 3)) {
+				        			classname = "clear";
+				        		}
 			        			return (
-				        			<Post key={_id} post={post} id={_id} user={this.state.user}/>
+				        			<Post className={classname} key={_id} post={post} id={_id} user={this.state.user}/>
 				        		)
 			        		}
 				        		
