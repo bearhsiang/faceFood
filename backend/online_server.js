@@ -191,15 +191,30 @@ online_db.once('open', () => {
                 }
             })
         })
-        // socket.on('delwant', '')
+        socket.on('delwant', (user_id, post_id) => {
+            User.findById(user_id, (err, user) => {
+                if(err){
+                    console.log('delwant error');
+                    console.log(err);
+                }else{
+                    new_wantlist = user.wantlist.filter((value, index, arr) => {
+                        return value !== post_id;
+                    })
+                    user.wantlist = new_wantlist;
+                    user.save();
+                }
+            })
+        })
         socket.on('getWantByUser', user_id => {
             User.findById(user_id, (err, user) => {
                 if(err){
                     console.log('get Want by user error');
                     console.log(err);
+                    return
                 }
                 if(!user){
                     console.log('user not exits');
+                    return
                 }
                 socket.emit('wantlist', {id: user_id, wantlist: user.wantlist});
             })
