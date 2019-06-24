@@ -18,18 +18,29 @@ class Profile extends Component{
 
 		this.state = {
 			user: this.props.match.params.id,
-			posts: []
+			want: []
 		};
 		this.socket = io.connect(endpoint);
-		this.socket.emit('getPostsByUser', this.state.user);
-        this.socket.on('posts', data => {
-			this.setState({ posts: data});
+		// this.getUserById
+		this.socket.emit('getWantByUser', this.state.user);
+        this.socket.on('wantlist', data => {
+			data.map((post, _id) => {
+			    this.socket.emit('getPostByID', post);
+		    })
+			// console.log(data);
         });
+        this.socket.on('post', data => {
+        	// console.log(data);
+        	this.setState(state => {
+        		state.want.push(data);
+        		console.log(this.state.want);
+        	})
+        })
         
 	}
 
 	gotoHeart = () => {
-		let href = 'http://localhost:3000/' + this.props.match.params.id + '/wanted'
+		let href = 'http://localhost:3000/users/' + this.props.match.params.id + '/wanted'
 		window.location.href = href;
 	}
 
@@ -60,16 +71,18 @@ class Profile extends Component{
 					</div>
 				}
 				<div id="content-bottom">
-				<h2>[$AuthorName]'s Diary</h2>
+				<h2>[$AuthorName]'s Wanted List</h2>
 			        <div className="content-bottom-inner">
 			        {
-			        	this.state.posts.map((post, _id) => {
+			        	this.state.want.map((post, _id) => {
 			        		// console.log("post");
 			        		return (
 			        			<Post key={_id} post={post} id={_id}/>
 			        		)
 		                })
+			        	
 			        }
+
 			            <div className="clear"></div>
 			        </div>
 			 

@@ -5,7 +5,11 @@
 }
 
 /* Profile.js */
-button {
+h2 {
+	margin: 0px;
+	text-align: center;
+}
+.fixedButton {
 	position: fixed;
 	right: 12px;
 	width: 56px;
@@ -17,7 +21,7 @@ button {
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-button:hover {
+.fixedButton:hover {
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 6px 12px, rgba(0, 0, 0, 0.23) 0px 6px 12px;
 }
 

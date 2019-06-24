@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rou
 import Auth from '../../components/Home/Auth';
 import UsersList from '../../components/User/UsersList';
 import Profile from '../../components/Home/Profile';
+import Want from '../../components/Home/Want';
 import CreatePost from '../../components/UserPosts/CreatePosts';
 
 class App extends Component {
@@ -34,7 +35,7 @@ class App extends Component {
             {/* <Route path="/record" component={MenuList}></Route> */}
             {/* <Route path="/create" component={CreateList}></Route> */}
             {/* <Route path="/edit/:id" component={EditList}/> */}
-            <Route path="/:id/wanted" component={UsersList}/>
+            <Route path="/:id/wanted" component={Want}/>
             <Redirect to='/' />
           </Switch>
         </Router>

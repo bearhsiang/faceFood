@@ -118,6 +118,7 @@ online_db.once('open', () => {
             })
         });
         socket.on('getPostByID', post_id => {
+            console.log("getPostByID");
             Post.findById(post_id, (err, post) => {
                 if(err){
                     console.log(err);
