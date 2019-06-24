@@ -233,6 +233,12 @@ online_db.once('open', () => {
                 socket.emit('wantlist', {id: user_id, wantlist: user.wantlist});
             })
         })
+        socket.on('search', keyword => {
+            socket.emit('searchResult', {
+                users:['5d0a5206ec2bfdbad8df9dbd'],
+                posts:['5d0b7f3e6d2d621a82623bd8']
+            })
+        })
     });
 });
 http.listen(port, () => {
