@@ -32,28 +32,14 @@ class Profile extends Component{
 		})
 
         this.socket.on('wantlist', data => {
-        	// console.log(data);
-        	// this.socket.emit('getPostByID', "5d0a5dd7b05c84bb96651ac5");
-        	// console.log(this.state.user);
         	if (data.id === this.state.user) {
-        		// console.log(this.state.user);
-        		// this.socket.emit('getPostByID', "5d0a5dd7b05c84bb96651ac5");
-        		// console.log("i call getPostByID");
+        		console.log(data);
         		data.wantlist.map((post, _id) => {
-        			// console.log("i call getPostByID");
 				    this.socket.emit('getPostByID', post);
 			    })
         	} else {
-        		// console.log(this.state.user);
+        		console.log(data);
         		this.setState({mywantlist: data});
-    //     		this.state.want.map((post, id) => {
-				// 	this.setState(state => {
-				// 		state.heart.push(data.wantlist.indexOf(post._id));
-				// 		return state;
-				// 	});
-				// 	console.log(this.state.heart);
-				// })
-				
         	}
         });
         this.socket.on('post', data => {
@@ -61,7 +47,6 @@ class Profile extends Component{
         		state.want.push(data);
         		return state;
         	})
-        	// console.log("post");
         })
 	}
 j
