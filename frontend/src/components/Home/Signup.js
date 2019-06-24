@@ -25,7 +25,7 @@ class Signup extends Component{
 			}
 		})
 		this.socket.on('img', data => {
-			console.log(data);
+			// console.log(data);
 			this.setState({tmpURL: data});
 		})
 	}

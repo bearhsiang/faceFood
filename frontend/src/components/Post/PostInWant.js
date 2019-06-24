@@ -29,11 +29,18 @@ export default class Post extends Component {
     }
 
     want = () => {
-        console.log("want");
         let post_id = this.props.post._id;
         let user_id = Cookie.get('user');
         // console.log(user_id);
         this.socket.emit('want', post_id, user_id);
+    }
+
+    delwant = () => {
+        console.log("delwant");
+        let post_id = this.props.post._id;
+        let user_id = Cookie.get('user');
+        // console.log(user_id);
+        this.socket.emit('delwant', post_id, user_id);
     }
 
     render() {
@@ -43,7 +50,8 @@ export default class Post extends Component {
             	<li><h4>{this.props.post.name}</h4></li>
             	<li><img src={this.state.image[0]} width="240" /></li>
                 <li>
-                    <button className="btn" onClick={this.want} style={{padding: '0 1px'}}><Icon name='heart outline' color="red"/></button>
+                    <button className="btn" style={{padding: '0 1px'}}><Icon circular name='heart' color="red"/></button>
+                    <button className="btn" onClick={this.delwant} style={{padding: '0 1px'}}><Icon circular name='trash alternate outline' color="grey"/></button>
                 </li>
             	<li>{this.props.post.text}</li>
             	<li>{this.props.post.location}</li>

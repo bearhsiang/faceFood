@@ -11,7 +11,7 @@ export default class Users extends Component {
         }
         
         this.user = this.props.user;
-        console.log(this.user);
+        // console.log(this.user);
         this.socket = io.connect('http://localhost:3001');
 
         this.socket.emit('getImgByID', this.user.figure);

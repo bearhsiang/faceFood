@@ -7,7 +7,7 @@ import { Icon } from 'semantic-ui-react';
 import "./Login.css"
 
 import BotBtn from '../BotBtn';
-import Post from '../Post/PostInProfile'
+import Post from '../Post/PostInWant'
 // import CreatePost from "../UserPosts/CreatePosts"
 
 var endpoint = 'http://localhost:3001'
@@ -17,28 +17,32 @@ class Profile extends Component{
 		super(props);
 
 		this.state = {
+			name: "",
 			user: this.props.match.params.id,
 			want: []
 		};
 		this.socket = io.connect(endpoint);
 		// this.getUserById
+		this.socket.emit('getUserByID', this.state.user);
 		this.socket.emit('getWantByUser', this.state.user);
+		this.socket.on('user', data => {
+			this.setState({name: data.name});
+		})
         this.socket.on('wantlist', data => {
+        	// console.log(data);
 			data.map((post, _id) => {
 			    this.socket.emit('getPostByID', post);
 		    })
-			// console.log(data);
         });
         this.socket.on('post', data => {
-        	// console.log(data);
         	this.setState(state => {
         		state.want.push(data);
-        		console.log(this.state.want);
+        		return state;
+        		// console.log(this.state.want);
         	})
         })
-        
 	}
-
+j
 	gotoHeart = () => {
 		let href = 'http://localhost:3000/users/' + this.props.match.params.id + '/wanted'
 		window.location.href = href;
@@ -71,14 +75,16 @@ class Profile extends Component{
 					</div>
 				}
 				<div id="content-bottom">
-				<h2>[$AuthorName]'s Wanted List</h2>
+				<h2>{this.state.name}'s Wanted List</h2>
 			        <div className="content-bottom-inner">
 			        {
 			        	this.state.want.map((post, _id) => {
-			        		// console.log("post");
-			        		return (
-			        			<Post key={_id} post={post} id={_id}/>
-			        		)
+			        		if (post) {
+			        			return (
+				        			<Post key={_id} post={post} id={_id}/>
+				        		)
+			        		}
+				        		
 		                })
 			        	
 			        }
