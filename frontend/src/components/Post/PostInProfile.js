@@ -5,6 +5,8 @@ import { Icon } from 'semantic-ui-react';
 import io from 'socket.io-client';
 import Cookie from 'js-cookie';
 
+var href;
+
 export default class Post extends Component {
     constructor(props) {
         super(props);
@@ -44,7 +46,7 @@ export default class Post extends Component {
             	<li>{this.props.post.text}</li>
             	<li>{this.props.post.location}</li>
             	<li>
-                    <a href="#">Read More</a>
+                    <a href={'/post/' + this.props.post._id}>Read More</a>
                 </li>
             </ul>
         );
