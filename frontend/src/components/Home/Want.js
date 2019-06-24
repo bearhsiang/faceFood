@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import Cookie from 'js-cookie';
 import io from 'socket.io-client';
 import { Icon } from 'semantic-ui-react';
-// import { Button } from 'react-floating-action-button';
 
 import "./Login.css"
 
 import BotBtn from '../BotBtn';
 import Post from '../Post/PostInWant'
-// import CreatePost from "../UserPosts/CreatePosts"
 
 var endpoint = 'http://localhost:3001'
 
@@ -22,14 +20,13 @@ class Profile extends Component{
 			want: []
 		};
 		this.socket = io.connect(endpoint);
-		// this.getUserById
 		this.socket.emit('getUserByID', this.state.user);
 		this.socket.emit('getWantByUser', this.state.user);
+		// this.socket.emit('getWantByUser', Cookie.get('user'));
 		this.socket.on('user', data => {
 			this.setState({name: data.name});
 		})
         this.socket.on('wantlist', data => {
-        	// console.log(data);
 			data.map((post, _id) => {
 			    this.socket.emit('getPostByID', post);
 		    })
@@ -38,7 +35,6 @@ class Profile extends Component{
         	this.setState(state => {
         		state.want.push(data);
         		return state;
-        		// console.log(this.state.want);
         	})
         })
 	}
@@ -81,14 +77,12 @@ j
 			        	this.state.want.map((post, _id) => {
 			        		if (post) {
 			        			return (
-				        			<Post key={_id} post={post} id={_id}/>
+				        			<Post key={_id} post={post} id={_id} user={this.state.user}/>
 				        		)
 			        		}
 				        		
 		                })
-			        	
 			        }
-
 			            <div className="clear"></div>
 			        </div>
 			 
