@@ -24,7 +24,7 @@ class Profile extends Component{
 		};
 		this.socket = io.connect(endpoint);
 		this.socket.emit('getPostsByUser', this.state.user);
-		this.socket.emit('getWantByUser', this.state.user);
+		this.socket.emit('getWantByUser', Cookie.get('user'));
 		this.socket.emit('getUserByID', this.state.user);
 		this.socket.on('user', data => {
 			this.setState({name: data.name});
@@ -34,15 +34,12 @@ class Profile extends Component{
         });
         this.socket.on('wantlist', data => {
 			this.state.posts.map((post, id) => {
-				// console.log(post._id);
 				this.setState(state => {
 					state.heart.push(data.indexOf(post._id));
 					return state;
 				});
 			})
-			// console.log(this.state.heart);
         });
-        
 	}
 
 	gotoHeart = () => {
@@ -81,20 +78,23 @@ class Profile extends Component{
 			        <div className="content-bottom-inner">
 			        {
 			        	this.state.posts.map((post, _id) => {
+			        		var want, classname;
 			        		if (this.state.heart[_id] < 0) {
-			        			var want = "heart outline";
+			        			want = "heart outline";
 			        		}
 			        		else {
-			        			var want = "heart";
+			        			want = "heart";
 			        		}
+			        		if (!(_id % 3)) {
+			        			classname = "clear";
+			        		}
+			        		console.log(classname);
 			        		return (
-			        			<Post key={_id} post={post} id={_id} want={want} />
+			        			<Post className={classname} key={_id} post={post} id={_id} want={want} />
 			        		)
 		                })
 			        }
-			            <div className="clear"></div>
 			        </div>
-			 
 				</div>
 				
 				{this.state.user === Cookie.get('user') && <BotBtn/>}

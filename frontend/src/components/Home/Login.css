@@ -3,6 +3,9 @@
 	width: 50%;
 	margin-top: 15px;
 }
+.clear {
+	clear: both;
+}
 
 /* Profile.js */
 h2 {
@@ -39,7 +42,7 @@ h2 {
 
 #content-bottom {
 	margin:0 auto 0;
-	width: 960px;
+	width: 1020px;
 }
 
 #content-bottom p {
@@ -60,13 +63,13 @@ h2 {
 }
 
 #content-bottom .content-bottom-inner ul {
-	    background-color: #fff;
+	background-color: #fff;
     float: left;
     list-style: none outside none;
-    margin: 0 15px 0 0;
-    padding: 15px;
-    width: 280px;
-	    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    width: 320px;
+    border-radius: 10px;
 }
 
 #content-bottom .content-bottom-inner li {
@@ -80,13 +83,13 @@ h2 {
 #content-bottom .content-bottom-inner li a {
 	color: #fff;
 	text-decoration: none;
-	background-color:#0173CB;
+	background-color:#237ef3;
 	padding:7px;
 	border-radius: 5px;
 }
 
 #content-bottom .content-bottom-inner h4 {
-  color: #0173CB;
+	color: #237ef3;
     font-size: 25px;
     font-weight: normal;
     padding-bottom: 0;
@@ -97,7 +100,7 @@ h2 {
 }
 
 #content-bottom .content-bottom-inner span.sitename {
-	font-family: Arial,Helvetica,sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 40px;
 	font-weight: normal;
 	letter-spacing: -2px;

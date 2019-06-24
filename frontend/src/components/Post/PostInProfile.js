@@ -9,8 +9,8 @@ export default class Post extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            image: [],
-            iconName: 'heart'
+            ulStyle: "",
+            image: []
         }
         this.socket = io.connect('http://localhost:3001');
         this.props.post.photo.map((photoID) => {
@@ -33,9 +33,9 @@ export default class Post extends Component {
 
     render() {
         return (
-            <ul id={this.props._id}>
+            <ul id={this.props._id} className={this.props.className}>
             	<li><h4>{this.props.post.name}</h4></li>
-            	<li><img src={this.state.image[0]} width="240" /></li>
+            	<li><img src={this.state.image[0]} width="100%" /></li>
                 <li>
                     <button className="btn" onClick={this.want} style={{padding: '0 1px'}}>
                         <Icon name={this.props.want} color="red"/>
