@@ -192,14 +192,19 @@ online_db.once('open', () => {
                 }
             })
         })
-        socket.on('delwant', (user_id, post_id) => {
+        socket.on('delwant', (post_id, user_id) => {
+            console.log(user_id, post_id)
             User.findById(user_id, (err, user) => {
                 if(err){
                     console.log('delwant error');
                     console.log(err);
                 }else{
-                    new_wantlist = user.wantlist.filter((value, index, arr) => {
-                        return value !== post_id;
+                    if(!user){
+                        console.log('no such user');
+                        return
+                    }
+                    let new_wantlist = user.wantlist.filter((value, index, arr) => {
+                        return value != post_id;
                     })
                     user.wantlist = new_wantlist;
                     user.save();
