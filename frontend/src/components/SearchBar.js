@@ -50,7 +50,7 @@ export default class SearchBar extends Component {
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: 'Search...',
+      placeholder: '🔍Search...',
       value,
       onChange: this.onChange
     };
