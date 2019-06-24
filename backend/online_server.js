@@ -126,6 +126,15 @@ online_db.once('open', () => {
                 socket.emit('post', post);
             })
         })
+        socket.on('getUserByID', user_id => {
+            User.findById(user_id, (err, user) => {
+                if(err){
+                    console.log(err);
+                    return;
+                }
+                socket.emit('user', user);
+            })
+        })
         socket.on('getImgByID', img_id => {
             Img.findById(img_id, 'buffer', (err, {buffer}) => {
                 if(err){
