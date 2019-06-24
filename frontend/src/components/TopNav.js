@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import Cookie from 'js-cookie';
-// import io from 'socket.io-client'
-
 import { makeStyles, fade } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
 import SearchBar from './SearchBar';
 import "./FoodSearch.css";
 const drawerWidth = 240;
