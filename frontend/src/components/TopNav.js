@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import Cookie from 'js-cookie';
 // import io from 'socket.io-client'
@@ -11,14 +10,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
+import SearchBar from './SearchBar';
 import "./FoodSearch.css";
-
-import Users from './User/Users';
-import MenuList from './Menu/todos-list';
-import CreateList from './Menu/create-todo';
-import EditList from './Menu/edit-todo';
-import Auth from './Home/Auth';
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -186,6 +179,7 @@ const TopNav = e => {
   }
   return (
     <div className={classes.root}>
+    
       <CssBaseline />
         <AppBar
           position="fixed"
@@ -198,17 +192,11 @@ const TopNav = e => {
             <Typography className={classes.title} variant="h6" noWrap style={{marginTop: '6px'}}>
               <a className="EatingDiary" href="/">Eating Diary</a>
             </Typography>
+            
             <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{ root: classes.inputRoot, input: classes.inputInput }}
-                inputProps={{ 'aria-label': 'Search' }}
-                onChange={e => search(e)}
-              />
+              <SearchBar />
             </div>
+            
             <div id="nav">
               <ul>
                 {login(show || loginStatus)}
