@@ -33,9 +33,10 @@ class Profile extends Component{
 			this.setState({ posts: data});
         });
         this.socket.on('wantlist', data => {
+        	console.log(data);
 			this.state.posts.map((post, id) => {
 				this.setState(state => {
-					state.heart.push(data.indexOf(post._id));
+					state.heart.push(data.wantlist.indexOf(post._id));
 					return state;
 				});
 			})
@@ -88,7 +89,6 @@ class Profile extends Component{
 			        		if (!(_id % 3)) {
 			        			classname = "clear";
 			        		}
-			        		console.log(classname);
 			        		return (
 			        			<Post className={classname} key={_id} post={post} id={_id} want={want} />
 			        		)
