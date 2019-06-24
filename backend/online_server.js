@@ -129,9 +129,14 @@ online_db.once('open', () => {
             })
         })
         socket.on('getUserByID', user_id => {
+            console.log(user_id);
             User.findById(user_id, (err, user) => {
                 if(err){
                     console.log(err);
+                    return;
+                }
+                if(!user){
+                    console.log('no such user');
                     return;
                 }
                 socket.emit('user', user);
@@ -142,6 +147,9 @@ online_db.once('open', () => {
                 if(err){
                     console.log(err);
                     return;
+                }
+                if(!buffer){
+                    console.log('no such img');
                 }
                 socket.emit('img', buffer);
             })
