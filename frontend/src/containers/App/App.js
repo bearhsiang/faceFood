@@ -13,6 +13,7 @@ import UsersList from '../../components/User/UsersList';
 import Profile from '../../components/Home/Profile';
 import Want from '../../components/Home/Want';
 import CreatePost from '../../components/UserPosts/CreatePosts';
+import EachPost from '../../components/UserPosts/EachPost';
 
 class App extends Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class App extends Component {
             <Route path='/users/:id' exact component={Profile}/>
             <Route path='/post/:id' exact component={Profile}/>
             <Route path="/:id/wanted" component={Want}/>
+            <Route path='/post/:id' exact component={EachPost}/>
             <Redirect to='/' />
           </Switch>
         </Router>
