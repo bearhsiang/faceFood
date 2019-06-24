@@ -58,7 +58,7 @@ export default class Post extends Component {
                 </li>
             	<li>{this.props.post.text}</li>
             	<li>{this.props.post.location}</li>
-            	<li><a href={'/post/' + this.props.post._id}>Read More</a></li>
+            	<li><Link to={`/post/${this.props.post._id}`}>Read More</Link></li>
             </ul>
         );
     }
