@@ -164,7 +164,7 @@ online_db.once('open', () => {
                 })
             })
         })
-        socket.on('want', ({post_id, user_id}) => {
+        socket.on('want', (post_id, user_id) => {
             User.findById(user_id, (err, user) => {
                 if(err){
                     console.log('want error');
