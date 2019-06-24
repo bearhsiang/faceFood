@@ -164,6 +164,35 @@ online_db.once('open', () => {
                 })
             })
         })
+        socket.on('want', ({post_id, user_id}) => {
+            User.findById(user_id, (err, user) => {
+                if(err){
+                    console.log('want error');
+                    console.log(err);
+                }else{
+                    if(!user){
+                        console.log('want user not found');
+                        return;
+                    }
+                    if(!(post_id in user.wantlist)){
+                        user.wantlist.push(post_id);
+                        user.save();
+                    }
+                }
+            })
+        })
+        socket.on('getWantByUser', user_id => {
+            User.findById(user_id, (err, user) => {
+                if(err){
+                    console.log('get Want by user error');
+                    console.log(err);
+                }
+                if(!user){
+                    console.log('user not exits');
+                }
+                socket.emit('wantlist', user.wantlist);
+            })
+        })
     });
 });
 http.listen(port, () => {

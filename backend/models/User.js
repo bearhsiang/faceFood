@@ -22,6 +22,10 @@ const UserSchema = new Schema({
 		type: String,
 		required: [true, 'password field is required.']
 	},
+	wantlist: {
+		type: [Schema.Types.ObjectId],
+		default: []
+	}
 })
 
 // Creating a table within database with the defined schema
