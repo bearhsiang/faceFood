@@ -42,6 +42,14 @@ export default class Post extends Component {
         this.socket.emit('delwant', post_id, user_id);
     }
 
+    excerpt = string => {
+        var shortText = string.substr( 0, 50 )
+        if (string.length > 50) {
+            shortText = shortText + '...';
+        }
+        return shortText;
+    }
+
     render() {
         return (
             <ul id={this.props._id} className={this.props.className}>
@@ -49,15 +57,17 @@ export default class Post extends Component {
             	<li><img src={this.state.image[0]} width="100%" /></li>
                 <li>
                     <button className="btn" style={{padding: '0 1px'}}><Icon circular name={this.props.want} color="red"/></button>
+                    {this.props.post.rate}
                     {
                         this.props.user === Cookie.get('user') && 
-                        <button className="btn" onClick={this.delwant} style={{padding: '0 1px'}}>
+                        <button className="btn" onClick={this.delwant} style={{padding: '0 1px', marginLeft: '6px'}}>
                             <Icon circular name='trash alternate outline' color="grey"/>
                         </button>
                     }
                 </li>
-            	<li>{this.props.post.text}</li>
-            	<li>{this.props.post.location}</li>
+            	<li style={{color: 'gray'}}>{this.props.post.location}</li>
+                <li style={{color: 'gray', fontStyle: 'italic'}}>{this.props.post.y}/{this.props.post.m}/{this.props.post.d}</li>
+                <li>{this.excerpt(this.props.post.text)}</li>
             	<li><Link to={`/post/${this.props.post._id}`}>Read More</Link></li>
             </ul>
         );

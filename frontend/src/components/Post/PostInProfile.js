@@ -24,6 +24,7 @@ export default class Post extends Component {
 	        	return {state};
 	        });
         })
+        console.log(this.props.post);
     }
 
     want = () => {
@@ -33,6 +34,14 @@ export default class Post extends Component {
         this.socket.emit('want', post_id, user_id);
     }
 
+    excerpt = string => {
+        var shortText = string.substr( 0, 50 )
+        if (string.length > 50) {
+            shortText = shortText + '...';
+        }
+        return shortText;
+    }
+
     render() {
         return (
             <ul id={this.props._id} className={this.props.className}>
@@ -40,11 +49,12 @@ export default class Post extends Component {
             	<li><img src={this.state.image[0]} width="100%" /></li>
                 <li>
                     <button className="btn" onClick={this.want} style={{padding: '0 1px'}}>
-                        <Icon name={this.props.want} color="red"/>
+                        <Icon name={this.props.want} color="red"/>{this.props.post.rate}
                     </button>
                 </li>
-            	<li>{this.props.post.text}</li>
-            	<li>{this.props.post.location}</li>
+                <li style={{color: 'gray'}}>{this.props.post.location}</li>
+                <li style={{color: 'gray', fontStyle: 'italic'}}>{this.props.post.y}/{this.props.post.m}/{this.props.post.d}</li>
+            	<li>{this.excerpt(this.props.post.text)}</li>
             	<li>
                     <Link to={`/post/${this.props.post._id}`}>Read More</Link>
                 </li>
