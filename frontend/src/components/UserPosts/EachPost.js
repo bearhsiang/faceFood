@@ -42,9 +42,15 @@ export default class EachPost extends Component {
                 return <img key={i} src={img} style={{width: '30%'}}/>
             })}
             </div><br />
-            <p>{`Description: ${this.state.post.text}`}</p>
-            <p>{`Location: ${this.state.post.location}`}</p>
-            <p>{`Rate: ${this.state.post.rate} out of 5`}</p>
+            <p style={{fontWeight: 'bold'}}>Description:</p>
+            <p>{`${this.state.post.text}`}</p>
+            
+            <p style={{fontWeight: 'bold', display: 'inline'}}>Location: </p>
+            <p style={{display: 'inline'}}>{`${this.state.post.location}`}</p>
+            <br/>
+            
+            <p style={{fontWeight: 'bold', display: 'inline'}}>Rate: </p>
+            <p style={{display: 'inline'}}>{`${this.state.post.rate} out of 5`}</p>
             
            
           </Jumbotron>

@@ -11,7 +11,7 @@
 h2 {
 	margin: 0px;
 	text-align: center;
-	font-size: 50px !important;
+	/*font-size: 50px !important;*/
 }
 .fixedButton {
 	position: fixed;
