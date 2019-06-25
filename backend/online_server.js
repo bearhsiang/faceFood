@@ -238,6 +238,10 @@ online_db.once('open', () => {
                 users:['5d0a5206ec2bfdbad8df9dbd'],
                 posts:['5d0b7f3e6d2d621a82623bd8']
             })
+            // socket.emit('searchResult', [
+            //     '5d0a5206ec2bfdbad8df9dbd',
+            //     '5d0b7f3e6d2d621a82623bd8'
+            // ])
         })
     });
 });
