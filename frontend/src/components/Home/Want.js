@@ -10,7 +10,7 @@ import Post from '../Post/PostInWant'
 
 var endpoint = 'http://localhost:3001'
 
-class Profile extends Component{
+class Want extends Component{
 	constructor(props){
 		super(props);
 
@@ -34,12 +34,12 @@ class Profile extends Component{
         this.socket.on('wantlist', data => {
         	if (data.id === this.state.user) {
         		console.log(data);
-        		data.wantlist.map((post, _id) => {
+        		data.wantlist.forEach((post, _id) => {
 				    this.socket.emit('getPostByID', post);
 			    })
         	} else {
         		console.log(data);
-        		this.setState({mywantlist: data});
+        		this.setState({mywantlist: data['wantlist']});
         	}
         });
         this.socket.on('post', data => {
@@ -49,10 +49,12 @@ class Profile extends Component{
         	})
         })
 	}
-j
+
 	gotoHeart = () => {
-		let href = 'http://localhost:3000/users/' + this.props.match.params.id + '/wanted'
-		window.location.href = href;
+		// let href = 'http://localhost:3000/users/' + this.props.match.params.id + '/wanted'
+		// window.location.href = href;
+		// this.props.history.push(`${this.props.match.params.id}/wanted`);
+		return
 	}
 
 	logout = () => {
@@ -64,7 +66,7 @@ j
 	render(){
 		return (
 			<div style={{marginTop: '70px'}}>
-				{this.state.user === Cookie.get('user') && 
+				{/* {this.state.user === Cookie.get('user') && 
 					<div>
 						<button id="heart" className="fixedButton" onClick={this.gotoHeart}>
 							<Icon name='heart' size="large" style={{margin: '0px'}}/>
@@ -80,7 +82,7 @@ j
 							<Icon name='heart' size="large" style={{margin: '0px'}}/>
 						</button>
 					</div>
-				}
+				} */}
 				<div id="content-bottom">
 				<h2>{this.state.name}'s Wanted List</h2>
 			        <div className="content-bottom-inner">
@@ -88,7 +90,7 @@ j
 			        	this.state.want.map((post, _id) => {
 			        		var want = "heart", classname;
 			        		if (this.state.user !== Cookie.get('user')) {
-			        			if (this.state.mywantlist.wantlist.indexOf(post._id) < 0) {
+			        			if (!(post._id in this.state.mywantlist)) {
 					       			want = "heart outline";
 					       		}
 			        		}
@@ -114,4 +116,4 @@ j
 	}
 }
 
-export default Profile;
+export default Want;

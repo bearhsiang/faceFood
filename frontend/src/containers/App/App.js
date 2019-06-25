@@ -25,8 +25,9 @@ class App extends Component {
             {/* <Route path="/" exact component={FoodSearch} /> */}
             <Route path="/" exact component={UsersList}/>
             <Route path='/login' component={Auth}/>
-            <Route path='/users/:id' component={Profile}/>
-            <Route path="/:id/wanted" component={Want}/>
+            {/* <Route path='/users/:id' render={ props => <Profile {...props}/>}/> */}
+            <Route path='/users/:id' exact component={Profile} />
+            <Route path="/users/:id/wanted" component={Want}/>
             <Route path='/post/:id' component={EachPost}/>
             <Redirect to='/' />
           </Switch>

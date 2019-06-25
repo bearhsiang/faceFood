@@ -111,7 +111,7 @@ online_db.once('open', () => {
         socket.on('getPostsByUser', user_id => {
             Post.find({author: user_id}, (err, posts) => {
                 // console.log(posts);
-                let posts_id_list = posts.map(post => post._id);
+                // let posts_id_list = posts.map(post => post._id);
                 // console.log(posts_id_list);
                 // socket.emit('posts', posts_id_list);
                 socket.emit('posts', posts);
@@ -196,6 +196,7 @@ online_db.once('open', () => {
                     if(!(post_id in user.wantlist)){
                         user.wantlist.push(post_id);
                         user.save();
+                        socket.emit('wantConfirm', {id:post_id, status: true});
                     }
                 }
             })
@@ -216,6 +217,7 @@ online_db.once('open', () => {
                     })
                     user.wantlist = new_wantlist;
                     user.save();
+                    socket.emit('wantConfirm', {id:post_id, status: false});
                 }
             })
         })

@@ -28,10 +28,11 @@ export default class Post extends Component {
     }
 
     want = () => {
-        console.log("want");
         let post_id = this.props.post._id;
         let user_id = Cookie.get('user');
-        this.socket.emit('want', post_id, user_id);
+        let mode = this.props.want == 'heart' ? 'delwant':'want';
+        console.log(mode);
+        this.props.wantSocket.emit(mode, post_id, user_id);
     }
 
     excerpt = string => {
