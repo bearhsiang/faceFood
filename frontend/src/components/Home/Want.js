@@ -6,45 +6,33 @@ import { Icon } from 'semantic-ui-react';
 import "./Login.css"
 
 import BotBtn from '../BotBtn';
-import Post from '../Post/PostInWant'
+import Post from '../Post/PostInProfile';
+import emptyUser from '../../emptyUser';
 
 var endpoint = 'http://localhost:3001'
 
 class Want extends Component{
 	constructor(props){
 		super(props);
-
+		this.user = this.props.user;
+		this.ownerid = this.props.match.params.id;
 		this.state = {
-			name: "",
-			user: this.props.match.params.id,
-			want: [],
-			mywantlist: [],
-			heart: []
+			owner: emptyUser,
+			post: []
 		};
-		this.socket = io.connect(endpoint);
-		this.socket.emit('getUserByID', this.state.user);
-		this.socket.emit('getWantByUser', this.state.user);
-		if (this.state.user !== Cookie.get('user')) {
-			this.socket.emit('getWantByUser', Cookie.get('user'));
-		}
-		this.socket.on('user', data => {
-			this.setState({name: data.name});
+		this.ownerSocket = io.connect(endpoint);
+		this.postSocket = io.connect(endpoint);
+		this.ownerSocket.emit('getUserByID', this.ownerid);
+		this.ownerSocket.on('user', user => {
+			this.setState({owner:user, post:[]});
+			user.wantlist.forEach(post_id => {
+				this.postSocket.emit('getPostByID', post_id);
+			});
 		})
-
-        this.socket.on('wantlist', data => {
-        	if (data.id === this.state.user) {
-        		console.log(data);
-        		data.wantlist.forEach((post, _id) => {
-				    this.socket.emit('getPostByID', post);
-			    })
-        	} else {
-        		console.log(data);
-        		this.setState({mywantlist: data['wantlist']});
-        	}
-        });
-        this.socket.on('post', data => {
+		
+        this.postSocket.on('post', data => {
         	this.setState(state => {
-        		state.want.push(data);
+        		state.post.push(data);
         		return state;
         	})
         })
@@ -84,21 +72,20 @@ class Want extends Component{
 					</div>
 				} */}
 				<div id="content-bottom">
-				<h2>{this.state.name}'s Wanted List</h2>
+				<h2>{this.state.owner.name}'s Wanted List</h2>
 			        <div className="content-bottom-inner">
 			        {
-			        	this.state.want.map((post, _id) => {
+			        	this.state.post.map((post, _id) => {
 			        		var want = "heart", classname;
-			        		if (this.state.user !== Cookie.get('user')) {
-			        			if (!(post._id in this.state.mywantlist)) {
+			        			if (!this.user.wantlist.includes(post._id)) {
 					       			want = "heart outline";
 					       		}
-			        		}
 				       		if (!(_id % 3)) {
 				       			classname = "clear";
 				       		}
 			       			return (
-			        			<Post className={classname} key={_id} post={post} id={_id} want={want} user={this.state.user}/>
+			        			<Post className={classname} key={post._id} post={post} want={want} user={this.user} wantSocket={this.props.wantSocket}/>								
+			        			// <Post className={classname} key={_id} post={post} id={_id} want={want} user={this.state.user}/>
 			        		)
 			        		// }
 				        		
@@ -109,7 +96,7 @@ class Want extends Component{
 			 
 				</div>
 				
-				{this.state.user === Cookie.get('user') && <BotBtn/>}
+				{this.user._id === this.state.owner._id && <BotBtn/>}
 				
 	        </div>
 		)

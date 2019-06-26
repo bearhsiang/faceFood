@@ -5,13 +5,10 @@ import { Icon } from 'semantic-ui-react';
 import io from 'socket.io-client';
 import Cookie from 'js-cookie';
 
-var href;
-
 export default class Post extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ulStyle: "",
             image: []
         }
         this.socket = io.connect('http://localhost:3001');
@@ -24,14 +21,15 @@ export default class Post extends Component {
 	        	return {state};
 	        });
         })
-        console.log(this.props.post);
     }
 
     want = () => {
         let post_id = this.props.post._id;
-        let user_id = Cookie.get('user');
+        let user_id = this.props.user._id;
+        if(!user_id){
+            return
+        }
         let mode = this.props.want == 'heart' ? 'delwant':'want';
-        console.log(mode);
         this.props.wantSocket.emit(mode, post_id, user_id);
     }
 

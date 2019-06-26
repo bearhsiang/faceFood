@@ -184,6 +184,7 @@ online_db.once('open', () => {
             })
         })
         socket.on('want', (post_id, user_id) => {
+            console.log('want');
             User.findById(user_id, (err, user) => {
                 if(err){
                     console.log('want error');
@@ -202,6 +203,7 @@ online_db.once('open', () => {
             })
         })
         socket.on('delwant', (post_id, user_id) => {
+            console.log('delwant');
             console.log(user_id, post_id)
             User.findById(user_id, (err, user) => {
                 if(err){

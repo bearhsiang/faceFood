@@ -5,7 +5,7 @@ import { Icon } from 'semantic-ui-react';
 // import { Button } from 'react-floating-action-button';
 
 import "./Login.css"
-
+import emptyUser from '../../emptyUser'
 import BotBtn from '../BotBtn';
 import Post from '../Post/PostInProfile'
 // import CreatePost from "../UserPosts/CreatePosts"
@@ -15,55 +15,33 @@ var endpoint = 'http://localhost:3001'
 class Profile extends Component{
 	constructor(props){
 		super(props);
+		this.ownerid = this.props.match.params.id;
 		this.state = {
-			name: "",
-			user: this.props.match.params.id,
+			user: this.props.user,
+			owner: emptyUser,
 			posts: [],
-			heart: []
 		};
-		this.socket = io.connect(endpoint);
-		this.socket.emit('getPostsByUser', this.state.user);
-		// this.socket.emit('getWantByUser', Cookie.get('user'));
-		this.socket.emit('getUserByID', this.state.user);
-		this.socket.on('user', data => {
-			this.setState({name: data.name});
+		// if(this.state.user._id == ''){
+		// 	this.props.history.push('/');
+		// 	// this.userSocket = io.connect(endpoint);
+		// 	// this.userSocket.emit('getUserByID', Cookie.get('user'));
+		// 	// this.userSocket.on('user', user => {
+		// 	// 	this.setState({user:user});
+		// 	// })
+		// }
+		this.postSocket = io.connect(endpoint);
+		this.ownerSocket = io.connect(endpoint);
+		this.ownerSocket.emit('getPostsByUser', this.ownerid);
+		this.ownerSocket.emit('getUserByID', this.ownerid);
+		this.ownerSocket.on('posts', data => {
+			this.setState({posts: data});
 		})
-        this.socket.on('posts', data => {
-			this.setState({ posts: data});
-			this.socket.emit('getWantByUser', Cookie.get('user'));
-			// let heart = this.state.posts.map(post => (post._id in data.wantlist))
-			// this.setState({heart: heart});
-        });
-        this.socket.on('wantlist', data => {
-			let heart = this.state.posts.map(post => {
-				return data.wantlist.includes(post._id);
-			})
-			this.setState({heart: heart});
-			// this.state.posts.forEach( post => {
-			// 	let heart_list = 
-			// 	this.setState(state => {
-			// 		state.heart.push(data.wantlist.indexOf(post._id));
-			// 		return state;
-			// 	});
-			// })
-		});
-		this.socket.on('wantConfirm', ({id, status}) => {
-			console.log('get confirm');
-			console.log(id);
-			console.log(status);
-			console.log(this.state.posts);
-
-			this.setState(state => {
-				state.heart[this.state.posts.findIndex(post => post._id == id)] = status;
-				return state;
-			})
-			console.log(this.state.heart);
+		this.ownerSocket.on('user', user => {
+			this.setState({owner: user});
 		})
 	}
 
 	gotoHeart = () => {
-		// let href = 'http://localhost:3000/' + this.props.match.params.id + '/wanted'
-		// window.location.href = href;
 		this.props.history.push(`${this.props.match.params.id}/wanted`);
 	}
 
@@ -74,9 +52,10 @@ class Profile extends Component{
 	}
 
 	render(){
+		console.log(this.state)
 		return (
 			<div style={{marginTop: '70px'}}>
-				{this.state.user === Cookie.get('user') && 
+				{this.ownerid === this.state.user._id && 
 					<div>
 						<button id="heart" className="fixedButton" onClick={this.gotoHeart}>
 							<Icon name='heart' size="large" style={{margin: '0px'}}/>
@@ -86,7 +65,7 @@ class Profile extends Component{
 						</button>
 					</div>
 				}
-				{this.state.user !== Cookie.get('user') && 
+				{this.ownerid !== this.state.user._id && 
 					<div>
 						<button className="fixedButton" onClick={this.gotoHeart} style={{bottom: "12px"}}>
 							<Icon name='heart' size="large" style={{margin: '0px'}}/>
@@ -94,29 +73,29 @@ class Profile extends Component{
 					</div>
 				}
 				<div id="content-bottom">
-				<h2>{this.state.name}'s Diary</h2>
+				<h2>{this.state.owner.name}'s Diary</h2>
 			        <div className="content-bottom-inner">
 			        {
-			        	this.state.posts.map( (post, _id) => {
+			        	this.state.posts.map( (post, index) => {
 			        		let want, classname;
-			        		if (this.state.heart[_id]) {
+			        		if (this.state.user.wantlist.includes(post._id)) {
 			        			want = "heart";
 			        		}
 			        		else {
 			        			want = "heart outline";
 			        		}
-			        		if (!(_id % 3)) {
+			        		if (!(index % 3)) {
 			        			classname = "clear";
-			        		}
+							}
 			        		return (
-			        			<Post className={classname} key={_id} post={post} id={_id} want={want} wantSocket={this.socket}/>
+			        			<Post className={classname} key={post._id} post={post} want={want} user={this.state.user} wantSocket={this.props.wantSocket}/>
 			        		)
 		                })
 			        }
 			        </div>
 				</div>
 				
-				{this.state.user === Cookie.get('user') && <BotBtn/>}
+				{this.ownerid === this.state.user._id && <BotBtn/>}
 				
 	        </div>
 		)
