@@ -3,7 +3,7 @@ import Cookie from 'js-cookie';
 import io from 'socket.io-client';
 import { Icon } from 'semantic-ui-react';
 // import { Button } from 'react-floating-action-button';
-
+import {Link} from 'react-router-dom'
 import "./Login.css"
 import emptyUser from '../../emptyUser'
 import BotBtn from '../BotBtn';
@@ -21,26 +21,24 @@ class Profile extends Component{
 			owner: emptyUser,
 			posts: [],
 		};
-		// if(this.state.user._id == ''){
-		// 	this.props.history.push('/');
-		// 	// this.userSocket = io.connect(endpoint);
-		// 	// this.userSocket.emit('getUserByID', Cookie.get('user'));
-		// 	// this.userSocket.on('user', user => {
-		// 	// 	this.setState({user:user});
-		// 	// })
-		// }
 		this.postSocket = io.connect(endpoint);
 		this.ownerSocket = io.connect(endpoint);
-		this.ownerSocket.emit('getPostsByUser', this.ownerid);
+		this.postSocket.emit('getPostsByUser', this.ownerid);
 		this.ownerSocket.emit('getUserByID', this.ownerid);
-		this.ownerSocket.on('posts', data => {
+		this.postSocket.on('posts', data => {
 			this.setState({posts: data});
 		})
 		this.ownerSocket.on('user', user => {
 			this.setState({owner: user});
 		})
 	}
-
+	componentWillReceiveProps(next){
+		if(this.props.match.params.id !== next.match.params.id){
+			this.ownerid = next.match.params.id;
+			this.ownerSocket.emit('getUserByID', this.ownerid);
+			this.postSocket.emit('getPostsByUser', this.ownerid);
+		}
+	}
 	gotoHeart = () => {
 		this.props.history.push(`${this.props.match.params.id}/wanted`);
 	}
@@ -48,11 +46,11 @@ class Profile extends Component{
 	logout = () => {
 		Cookie.remove('user');
 		this.setState({user: undefined});
-		this.socket.emit('logout', {});
+		this.props.handleLogout();
 	}
 
 	render(){
-		console.log(this.state)
+		// console.log(this.state)
 		return (
 			<div style={{marginTop: '70px'}}>
 				{this.ownerid === this.state.user._id && 
@@ -94,7 +92,6 @@ class Profile extends Component{
 			        }
 			        </div>
 				</div>
-				
 				{this.ownerid === this.state.user._id && <BotBtn/>}
 				
 	        </div>

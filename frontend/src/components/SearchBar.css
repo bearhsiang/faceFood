@@ -4,7 +4,7 @@ body {
   
   .react-autosuggest__container {
     position: relative;
-    opacity: 0.8;
+    opacity: 0.9;
   }
   
   .react-autosuggest__input {
@@ -30,7 +30,7 @@ body {
   
   .react-autosuggest__suggestions-container {
     display: none;
-    opacity: 0.8;
+    /* opacity: 0.8; */
     align-self: auto;
     margin-top: -22px;
     max-width: 240px;
@@ -66,3 +66,17 @@ body {
   .react-autosuggest__suggestion--highlighted {
     background-color: #ddd;
   }
+  .react-autosuggest__section-container {
+    border-top: 1px dashed #ccc;
+  }
+  
+  .react-autosuggest__section-container--first {
+    border-top: 0;
+  }
+  
+  .react-autosuggest__section-title {
+    padding: 10px 0 0 10px;
+    font-size: 12px;
+    color: #777;
+  }
+

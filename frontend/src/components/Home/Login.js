@@ -18,7 +18,6 @@ class Login extends Component{
 		this.socket = io.connect(endpoint);
 		this.socket.on('loginStatus', ({status, msg}) => {
 			if(status === 'Fail'){
-				console.log(msg);
 				this.setState({status: status});			
 			}else if(status === 'Success'){
 				this.props.handleLogin(msg);

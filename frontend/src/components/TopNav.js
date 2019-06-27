@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
-import Cookie from 'js-cookie';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import SearchBar from './SearchBar';
+import SearchBar from './SearchBar_multi';
+import {Link} from 'react-router-dom'
 import "./FoodSearch.css";
 const drawerWidth = 240;
 
@@ -119,60 +119,33 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const state = Cookie.get('user');
-var show = "";
-var searchInput = "";
 
-function login(status) {
+function login(state, status, classes) {
+  // console.log(state);
+  // console.log(status);
   if (state) {
     let href = "/users/" + state;
-    return (<li><a href={href}>{status}</a></li>)
+    // return <li><a href={href}>{status}</a></li>
+    return <Typography className={classes.title} variant="h6" noWrap style={{marginTop: '6px'}}>
+            <Link to={href} className='EatingDiary'>{status}</Link>
+          </Typography> 
   } else {
-    return (<li><a href="/login">{status}</a></li>)
+    // return (<li><a href="/login">{status}</a></li>)
+    return <Typography className={classes.title} variant="h6" noWrap style={{marginTop: '6px'}}>
+            <Link to='/login' className='EatingDiary'>{status}</Link>
+          </Typography>
   }
 }
 
-const TopNav = e => {
+const TopNav = ({user}) => {
+  const state = user._id;
+  var show = state ? 'Profile':'Login';
+  console.log(`TopNav id: ${user._id}`);
   const classes = useStyles();
   const [open] = React.useState(false);
   const [loginStatus, updateStatus] = React.useState("Login");
   const [href, updateHref] = React.useState("/login");
-  
-  if (state) {
-    show = "Profile";
-  }
-  useEffect(() => {
-    if(e.socket){
-      //連線成功在 console 中打印訊息
-      console.log('success connect!')
-      //設定監聽
-      initWebSocket()
-    }
-  },[e.socket])
 
-  const initWebSocket = () => {
-    //對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
-    e.socket.on('loginStatus', ({status, msg}) => {
-      if(status === 'Fail') {
-        console.log(msg);
-      } else if (status === 'Success') {
-        updateStatus("Profile");
-        let href = "/users/" + Cookie.get('user');
-        updateHref(href);
-      }
-    })
-    e.socket.on('logoutStatus', () => {
-      show = "";
-      updateStatus("Login");
-      updateHref("/login");
-      window.location.href = "http://localhost:3000";
-    })
-  }
-
-  const search = (e) => {
-    console.log('Search key: ' + e.target.value);
-    // insert the socket emit and on here
-  }
   return (
     <div className={classes.root}>
     
@@ -186,16 +159,17 @@ const TopNav = e => {
         >
           <Toolbar style={{marginLeft: '100px'}}>
             <Typography className={classes.title} variant="h6" noWrap style={{marginTop: '6px'}}>
-              <a className="EatingDiary" href="/">Eating Diary</a>
+              {/* <a className="EatingDiary" href="/">Eating Diary</a> */}
+              <Link to='/' className='EatingDiary'>Eating Diary</Link>
             </Typography>
             
             <div className={classes.search}>
-              <SearchBar />
+              <SearchBar/>
             </div>
             
             <div id="nav">
               <ul>
-                {login(show || loginStatus)}
+                {login(state,show, classes)}
               </ul>
             </div>       
           </Toolbar>

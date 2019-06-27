@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import io from 'socket.io-client';
 import { Jumbotron } from 'react-bootstrap';
 import './EachPost.css';
+import { Link } from 'react-router-dom'
 export default class EachPost extends Component {
     constructor(props) {
         super(props);
+        this.postID = this.props.match.params.id;
         this.state = {
-            postID: this.props.match.params.id,
             post: "",
             author: "",
             image: []
         }
         this.socket = io.connect('http://localhost:3001');
-        this.socket.emit('getPostByID', this.state.postID);
+        this.socket.emit('getPostByID', this.postID);
         this.socket.on('post', data => {
             this.setState({ post: data });
             this.state.post.photo.map((photoID) => {
@@ -26,11 +27,17 @@ export default class EachPost extends Component {
                 });
             });
 
-            this.socket.emit('getUserByID', this.state.post.author);
+            // this.socket.emit('getUserByID', this.state.post.author);
             this.socket.on('user', user => {
                 this.setState({ author: user });
             });
         });
+    }
+    componentWillReceiveProps(next){
+        if(this.props.match.params.id !== next.match.params.id){
+            this.postID = next.match.params.id;
+            this.socket.emit('getPostByID', this.postID);
+        }
     }
     render() {
         return (

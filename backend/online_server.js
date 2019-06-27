@@ -39,7 +39,7 @@ online_db.on('error', error => {
 online_db.once('open', () => {
     console.log('MongoDB connected!')
     io.on('connection', function(socket){
-        console.log('connect');
+        // console.log('connect');
         socket.on('login', ({name, password}) => {
             User.findOne({name: name, password: password},(error, user) => {
                 if(error){
@@ -50,10 +50,10 @@ online_db.once('open', () => {
                     status: user? 'Success':'Fail',
                     msg: user? user._id: 'user not exists',
                 }
-                console.log(user);
+                // console.log(user);
                 socket.emit('loginStatus', data);
                 socket.broadcast.emit('loginStatus', data);
-                console.log(data);
+                // console.log(data);
             });
         })
         socket.on('logout', () => {
@@ -63,7 +63,7 @@ online_db.once('open', () => {
         socket.on('signup', ({name, password, email, figure}) => {
             
             User.countDocuments({name: name}, (error, count) => {
-                console.log(count);
+                // console.log(count);
                 if(error){
                     console.log('error');
                 }else if(count){
@@ -89,7 +89,7 @@ online_db.once('open', () => {
                                 console.log(err);
                                 return
                             }
-                            console.log(user);
+                            // console.log(user);
                             socket.emit('signupStatus', {
                                 status: 'success',
                                 msg: user._id,
@@ -118,7 +118,7 @@ online_db.once('open', () => {
             })
         });
         socket.on('getPostByID', post_id => {
-            console.log("getPostByID");
+            // console.log("getPostByID");
             Post.findById(post_id, (err, post) => {
                 if(err){
                     console.log(err);
@@ -129,14 +129,15 @@ online_db.once('open', () => {
             })
         })
         socket.on('getUserByID', user_id => {
-            console.log(user_id);
+            // console.log(user_id);
+            if(user_id == '') return;
             User.findById(user_id, (err, user) => {
                 if(err){
                     console.log(err);
                     return;
                 }
                 if(!user){
-                    console.log('no such user');
+                    // console.log('no such user');
                     return;
                 }
                 socket.emit('user', user);
@@ -179,12 +180,12 @@ online_db.once('open', () => {
                         console.log(err);
                         return
                     }
-                    console.log(post);
+                    // console.log(post);
                 })
             })
         })
         socket.on('want', (post_id, user_id) => {
-            console.log('want');
+            if(user_id == '') return;
             User.findById(user_id, (err, user) => {
                 if(err){
                     console.log('want error');
@@ -203,8 +204,7 @@ online_db.once('open', () => {
             })
         })
         socket.on('delwant', (post_id, user_id) => {
-            console.log('delwant');
-            console.log(user_id, post_id)
+            if(user_id == '') return;
             User.findById(user_id, (err, user) => {
                 if(err){
                     console.log('delwant error');
@@ -238,14 +238,27 @@ online_db.once('open', () => {
             })
         })
         socket.on('search', keyword => {
-            socket.emit('searchResult', {
-                users:['5d0a5206ec2bfdbad8df9dbd'],
-                posts:['5d0b7f3e6d2d621a82623bd8']
+            // console.log(keyword);
+            if(keyword == '') return;
+            User.find({name: {$regex: keyword, $options: 'i'}}, (err, users) =>{
+                if(err){
+                    console.log('search error');
+                    console.log(err);
+                    return;
+                }
+                Post.find({text: {$regex: keyword, $options: 'i'}}, (err, posts) => {
+                    if(err){
+                        console.log('search error');
+                        console.log(err);
+                        return;
+                    }
+                    // console.log(`find result of ${users.length+posts.length}`)
+                    socket.emit('searchResult', {
+                        users: users.map(user => ({name: user.name, id: user._id})),
+                        posts: posts.map(post => ({name: post.name, id:post._id}))
+                    })
+                })
             })
-            // socket.emit('searchResult', [
-            //     '5d0a5206ec2bfdbad8df9dbd',
-            //     '5d0b7f3e6d2d621a82623bd8'
-            // ])
         })
     });
 });
