@@ -5,7 +5,7 @@ var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var port = 3001;
 var fs = require('fs');
-// var uuidv4 = require('uuid/v4');
+var SHA256 = require('crypto-js/sha256')
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const Post = require('./models/Post')
@@ -41,16 +41,17 @@ online_db.once('open', () => {
     io.on('connection', function(socket){
         // console.log('connect');
         socket.on('login', ({name, password}) => {
-            User.findOne({name: name, password: password},(error, user) => {
+            console.log(name);
+            User.findOne({name: name, password: String(SHA256(password))},(error, user) => {
                 if(error){
                     console.log('login error');
+                    console.log(error);
                     return;
                 }
                 let data = {
                     status: user? 'Success':'Fail',
                     msg: user? user._id: 'user not exists',
                 }
-                // console.log(user);
                 socket.emit('loginStatus', data);
                 socket.broadcast.emit('loginStatus', data);
                 // console.log(data);
@@ -79,7 +80,7 @@ online_db.once('open', () => {
                         let newUser = {
                             // _id: user_id,
                             name: name,
-                            password: password,
+                            password: SHA256(password),
                             email: email,
                             figure: img._id,
                         }

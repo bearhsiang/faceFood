@@ -32,6 +32,8 @@ class App extends Component {
     this.userSocket.emit('getUserByID', this.userid);
     this.userSocket.on('user', user => {
       this.setState({user:user});
+      // console.log('get user:');
+      // console.log(user);
     })
     
   }

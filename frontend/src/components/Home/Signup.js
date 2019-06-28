@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 // import { timingSafeEqual } from 'crypto';
 import io from 'socket.io-client'
+import { Redirect } from 'react-router-dom';
 
 import "./Login.css"
 
@@ -14,14 +15,17 @@ class Signup extends Component{
 			email: '',
 			figure: '',
 			imgdata: '',
+			status: false,
 			// tmpURL: '',
 		}
 		this.socket = io.connect(endpoint);
 		this.socket.on('signupStatus', ({status, msg}) => {
 			if(status === 'failed'){
-				console.log(msg);
+				// console.log(msg);
+				return;
 			}else if(status === 'success'){
 				this.props.handleLogin(msg);
+				this.setState({status: true});
 			}
 		})
 		this.socket.on('img', data => {
@@ -60,35 +64,37 @@ class Signup extends Component{
 
 	}
 	render(){
-
+		if(this.state.status){
+			return <Redirect push to='/'></Redirect>
+		}
 		return(
 			<div className="container" style={{right: '0px', padding: '0 100px 0 50px'}}>
 				<form onSubmit={this.signup}>
                     <div className="form-group">
-                        <label>User Name: </label>
+                        <label>User Name </label>
 						<input  id='name'
 								type="text"
-								placeholder="Name......."
+								placeholder="Name"
                                 className="form-control"
                                 onChange={this.changeValue}
                         />
                     </div>
 
                     <div className="form-group">
-                        <label>Password: </label>
+                        <label>Password </label>
 						<input  id='password'
-								type="text"
-                                placeholder="*********"
+								type="password"
+                                placeholder="Password"
 								className="form-control"
                                 onChange={this.changeValue}
                         />
                     </div>
                     
 					<div className="form-group">
-                        <label>email </label>
+                        <label>Email </label>
 						<input  id='email'
 								type="text"
-                                placeholder="123@example.com"
+                                placeholder="Email"
 								className="form-control"
                                 onChange={this.changeValue}
                         />
