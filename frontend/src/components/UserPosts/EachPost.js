@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import io from 'socket.io-client';
 import { Jumbotron } from 'react-bootstrap';
 import './EachPost.css';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 const endpoint = 'http://localhost:3001'
 export default class EachPost extends Component {
     constructor(props) {
@@ -53,9 +55,17 @@ export default class EachPost extends Component {
             <h2>{this.state.post.name}</h2>
             <center><Link to={user_link}><p style={{fontSize: '20px', fontStyle: 'italic'}}>{`by ${this.state.author.name}`}</p></Link></center><br/>
             <div style={{display: 'flex', justifyContent: 'center'}}> 
-            {this.state.image.map((img, i) => {
-                return <img key={i} src={img} style={{width: '30%'}}/>
-            })}
+
+            <Carousel autoPlay={true} infiniteLoop={true} useKeyboardArrows={true} showThumbs={false} showArrows={false} showStatus={false}>
+                {this.state.image.map((img, i) => {
+                    return (
+                        <div key={i} style={{height: '500px', maxWidth: '100%', backgroundColor: '#e9ecef'}}>
+                            <img src={img} style={{maxHeight: '100%', maxWidth: '100%',width: 'auto', height: 'auto', contain: 'fit'}} />
+                        </div>
+                    )
+                })}
+                </Carousel>
+           
             </div><br />
             <p style={{fontWeight: 'bold'}}>Description:</p>
             <p>{`${this.state.post.text}`}</p>

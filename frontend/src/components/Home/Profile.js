@@ -20,16 +20,19 @@ class Profile extends Component{
 			user: this.props.user,
 			owner: emptyUser,
 			posts: [],
+			check: false,
 		};
 		this.postSocket = io.connect(endpoint);
 		this.ownerSocket = io.connect(endpoint);
 		this.postSocket.emit('getPostsByUser', this.ownerid);
 		this.ownerSocket.emit('getUserByID', this.ownerid);
 		this.postSocket.on('posts', data => {
-			this.setState({posts: data});
+			this.setState({posts: data? data:[]});
 		})
 		this.ownerSocket.on('user', user => {
-			this.setState({owner: user});
+			this.setState({
+				owner: user,
+			});
 		})
 	}
 	componentWillReceiveProps(next){
@@ -48,9 +51,7 @@ class Profile extends Component{
 		this.setState({user: undefined});
 		this.props.handleLogout();
 	}
-
 	render(){
-		// console.log(this.state)
 		return (
 			<div style={{marginTop: '70px'}}>
 				{this.ownerid === this.state.user._id && 
@@ -92,7 +93,7 @@ class Profile extends Component{
 			        }
 			        </div>
 				</div>
-				{this.ownerid === this.state.user._id && <BotBtn/>}
+				{this.ownerid === this.state.user._id && <BotBtn socket={this.postSocket}/>}
 				
 	        </div>
 		)

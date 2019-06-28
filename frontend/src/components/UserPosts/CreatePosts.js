@@ -19,9 +19,12 @@ export default class CreatePosts extends Component {
             rate: 2.5,
             redirect: false
         };
-        this.socket = io.connect('http://localhost:3001');
+        this.socket = this.props.socket;
         this.uploadFigure = this.uploadFigure.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
+        this.socket.on('postConfirm', () => {
+            this.socket.emit('getPostsByUser', this.state.author);
+        })
     }
 
     uploadFigure = (e) => {
@@ -71,10 +74,8 @@ export default class CreatePosts extends Component {
             photo: this.state.photo,
             rate: this.state.rate
         };
-        console.log(newpost);
         this.socket.emit('createPost', newpost);
         this.setState({
-            // author: Cookie.get('user'),
             name: '',
             y: today.getFullYear(),
             m: today.getMonth()+1,
@@ -85,6 +86,7 @@ export default class CreatePosts extends Component {
             rate: 2.5,
             redirect: !this.state.redirect
         })
+        
     }
 
     render() {

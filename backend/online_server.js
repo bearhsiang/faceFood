@@ -41,7 +41,7 @@ online_db.once('open', () => {
     io.on('connection', function(socket){
         // console.log('connect');
         socket.on('login', ({name, password}) => {
-            console.log(name);
+            // console.log(name);
             User.findOne({name: name, password: String(SHA256(password))},(error, user) => {
                 if(error){
                     console.log('login error');
@@ -138,7 +138,7 @@ online_db.once('open', () => {
                     return;
                 }
                 if(!user){
-                    // console.log('no such user');
+                    // socket.emit('user', undefined);
                     return;
                 }
                 socket.emit('user', user);
@@ -182,8 +182,10 @@ online_db.once('open', () => {
                         return
                     }
                     // console.log(post);
+                    socket.emit('postConfirm', {});
                 })
             })
+            
         })
         socket.on('want', (post_id, user_id) => {
             if(user_id == '') return;
