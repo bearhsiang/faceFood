@@ -237,9 +237,28 @@ online_db.once('open', () => {
                 socket.emit('wantlist', {id: user_id, wantlist: user.wantlist});
             })
         })
-        socket.on('search', keyword => {
+        socket.on('search', key => {
             // console.log(keyword);
-            if(keyword == '') return;
+            if(key == '') return;
+            let keyword = key;
+            if(key === ':all'){
+                keyword = '';
+            }else if(key === ':random'){
+                Post.find({}, (err, posts) => {
+                    if(err){
+                        console.log('search error');
+                        console.log(err);
+                        return;
+                    }
+                    let r = Math.floor(Math.random()*posts.length)
+                    socket.emit('searchResult', {
+                        users: [],
+                        posts: [r].map(index => ({name: posts[index].name, id:posts[index]._id})),
+                        // posts: posts.map(post => ({name: post.name, id:post._id}))
+                    })
+                })
+                return;
+            }
             User.find({name: {$regex: keyword, $options: 'i'}}, (err, users) =>{
                 if(err){
                     console.log('search error');
