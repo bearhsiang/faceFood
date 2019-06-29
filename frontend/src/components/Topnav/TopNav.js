@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -140,11 +140,8 @@ function login(state, status, classes) {
 const TopNav = ({user}) => {
   const state = user._id;
   var show = state ? 'Profile':'Login';
-  console.log(`TopNav id: ${user._id}`);
   const classes = useStyles();
   const [open] = React.useState(false);
-  const [loginStatus, updateStatus] = React.useState("Login");
-  const [href, updateHref] = React.useState("/login");
 
   return (
     <div className={classes.root}>

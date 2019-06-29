@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import Login from './Login'
 import Signup from './Signup'
 
-import "../FoodSearch.css";
-
 class Auth extends Component{
 	render(){
 		return(

@@ -5,7 +5,7 @@ import './EachPost.css';
 import { Link } from 'react-router-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
-const endpoint = 'http://localhost:3001'
+const endpoint = process.env.REACT_APP_END_POINT;
 export default class EachPost extends Component {
     constructor(props) {
         super(props);
@@ -18,13 +18,12 @@ export default class EachPost extends Component {
         this.socket = io.connect(endpoint);
         this.socket.emit('getPostByID', this.postID);
         this.socket.on('post', data => {
-            console.log(data.author);
             this.setState({ 
                 post: data,
                 author: '',
                 image:[],
             });
-            this.state.post.photo.map((photoID) => {
+            this.state.post.photo.forEach((photoID) => {
                 this.socket.emit('getImgByID', photoID);
             });
 
@@ -60,11 +59,11 @@ export default class EachPost extends Component {
                 {this.state.image.map((img, i) => {
                     return (
                         <div key={i} style={{height: '500px', maxWidth: '100%', backgroundColor: '#e9ecef'}}>
-                            <img src={img} style={{maxHeight: '100%', maxWidth: '100%',width: 'auto', height: 'auto', contain: 'fit'}} />
+                            <img src={img} alt='foods' style={{maxHeight: '100%', maxWidth: '100%',width: 'auto', height: 'auto', contain: 'fit'}} />
                         </div>
                     )
                 })}
-                </Carousel>
+            </Carousel>
            
             </div><br />
             <p style={{fontWeight: 'bold'}}>Description:</p>

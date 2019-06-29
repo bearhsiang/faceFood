@@ -1,18 +1,25 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import './SearchBar.css'
 import io from 'socket.io-client';
-import {Router, NavLink, Redirect} from 'react-router-dom'
-
+import {Link} from 'react-router-dom'
 const getSuggestionValue = suggestion => {
   return suggestion.name;
 }
 const renderSuggestion = suggestion => (
-    <NavLink to={`/${suggestion['type'] == 'post' ? 'post':'users'}/${suggestion['id']}`}>
-      {suggestion['type'] == 'post'? suggestion.name:suggestion.name}
-    </NavLink >
+    <Link to={`/${suggestion['type'] === 'post' ? 'post':'users'}/${suggestion['id']}`}>
+      {suggestion['type'] === 'post'? suggestion.name:suggestion.name}
+    </Link>
+    // <div onDoubleClick={console.log('click')}>{suggestion['type'] == 'post'? suggestion.name:suggestion.name}</div>
 );
 
+const renderSectionTitle = section => {
+  return <strong>{section['title']}</strong>
+}
+const getSectionSuggestions = section => {
+  return section.elements;
+}
+const endpoint = process.env.REACT_APP_END_POINT;
 export default class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -24,9 +31,8 @@ export default class SearchBar extends Component {
         posts: []
       }
     };
- 
-    this.socket = io.connect('http://localhost:3001');
-    this.socket.emit('search', this.state.value);
+    // this.socket = this.props.socket;
+    this.socket = io.connect(endpoint);
     this.socket.on('searchResult', data => {
       this.setState({ contents: data })
       this.onSuggestionsFetchRequested({value: ''});
@@ -55,8 +61,11 @@ export default class SearchBar extends Component {
     let user_list = this.state.contents['users'].map(user => {
       return {type: 'user', id: user.id, name: user.name}
     })
+    let sug = []
+    if(user_list.length > 0) sug.push({title: 'user', elements: user_list});
+    if(post_list.length > 0) sug.push({title: 'post', elements: post_list});
     this.setState({
-      suggestions: post_list.concat(user_list),
+      suggestions: sug,
     })
   };
 
@@ -72,18 +81,25 @@ export default class SearchBar extends Component {
     const inputProps = {
       placeholder: '🔍Search...',
       value,
-      onChange: this.onChange
+      onChange: this.onChange,
+      
     };
 
     return (
+        <div>
         <Autosuggest
+            multiSection={true}
             suggestions={suggestions}
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}
+            renderSectionTitle={renderSectionTitle}
+            getSectionSuggestions={getSectionSuggestions}
             inputProps={inputProps}
           />
+          {/* <button>Search</button> */}
+        </div>
     );
   }
 }

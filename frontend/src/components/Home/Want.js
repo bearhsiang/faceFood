@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import Cookie from 'js-cookie';
 import io from 'socket.io-client';
-import { Icon } from 'semantic-ui-react';
 
 import "./Login.css"
 
-import BotBtn from '../BotBtn';
+// import BotBtn from '../Createpost/BotBtn';
 import Post from '../Post/PostInProfile';
 import emptyUser from '../../emptyUser';
 
-var endpoint = 'http://localhost:3001'
+const endpoint = process.env.REACT_APP_END_POINT;
 
 class Want extends Component{
 	constructor(props){
@@ -44,7 +43,10 @@ class Want extends Component{
 		// this.props.history.push(`${this.props.match.params.id}/wanted`);
 		return
 	}
-
+	componentWillUnmount(){
+		this.postSocket.disconnect();
+		this.ownerSocket.disconnect();
+	}
 	logout = () => {
 		Cookie.remove('user');
 		this.setState({user: undefined});
@@ -96,7 +98,7 @@ class Want extends Component{
 			 
 				</div>
 				
-				{this.user._id === this.state.owner._id && <BotBtn/>}
+				{/* {this.user._id === this.state.owner._id && <BotBtn socket={this.postSocket}/>} */}
 				
 	        </div>
 		)

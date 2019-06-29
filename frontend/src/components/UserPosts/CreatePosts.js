@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Form, Row } from 'react-bootstrap';
-import io from 'socket.io-client';
 import Cookie from 'js-cookie';
 
 const today = new Date();

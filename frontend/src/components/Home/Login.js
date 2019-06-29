@@ -4,7 +4,7 @@ import io from 'socket.io-client'
 
 import "./Login.css"
 
-var endpoint = 'http://localhost:3001'
+const endpoint = process.env.REACT_APP_END_POINT;
 
 class Login extends Component{
 	constructor(props){
@@ -45,7 +45,7 @@ class Login extends Component{
 	}
 
 	componentDidMount() {
-		if(this.state.status == 'Fail') {
+		if(this.state.status === 'Fail') {
 			this.setState({
 				loginName: "",
 				loginPassword: "",

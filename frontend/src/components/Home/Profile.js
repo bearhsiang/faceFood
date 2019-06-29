@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import Cookie from 'js-cookie';
 import io from 'socket.io-client';
 import { Icon } from 'semantic-ui-react';
-// import { Button } from 'react-floating-action-button';
-import {Link} from 'react-router-dom'
 import "./Login.css"
 import emptyUser from '../../emptyUser'
-import BotBtn from '../BotBtn';
+import BotBtn from '../Createpost/BotBtn';
 import Post from '../Post/PostInProfile'
-// import CreatePost from "../UserPosts/CreatePosts"
 
-var endpoint = 'http://localhost:3001'
+const endpoint = process.env.REACT_APP_END_POINT;
 
 class Profile extends Component{
 	constructor(props){
@@ -34,6 +31,10 @@ class Profile extends Component{
 				owner: user,
 			});
 		})
+	}
+	componentWillUnmount(){
+		this.postSocket.disconnect();
+		this.ownerSocket.disconnect();
 	}
 	componentWillReceiveProps(next){
 		if(this.props.match.params.id !== next.match.params.id){

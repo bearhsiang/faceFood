@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-floating-action-button';
 import './BotBtn.css';
-import CreatePosts from './UserPosts/CreatePosts';
+import CreatePosts from '../UserPosts/CreatePosts';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 // var socket;
 // const popover = (
@@ -9,13 +9,12 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
     //     <CreatePosts/>
     // </Popover>
 // );
-var socket;
 class BotBtn extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
         this.socket = this.props.socket;
-
+        // console.log(this.socket);
         // this.state = {
         //     openBot: false
         // }

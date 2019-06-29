@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import webSocket from 'socket.io-client'
-import TopNav from '../../components/TopNav';
-import { BrowserRouter as Router, Route, Switch, Redirect, Link} from 'react-router-dom';
+import TopNav from '../../components/Topnav/TopNav';
+import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import Auth from '../../components/Home/Auth';
 import UsersList from '../../components/User/UsersList';
 import Profile from '../../components/Home/Profile';
@@ -10,7 +10,7 @@ import EachPost from '../../components/UserPosts/EachPost';
 import Cookie from 'js-cookie';
 import emptyUser from '../../emptyUser'
 
-const endpoint = 'http://localhost:3001';
+const endpoint = process.env.REACT_APP_END_POINT
 class App extends Component {
   constructor(props) {
     super(props);

@@ -12,7 +12,7 @@ export default class UsersList extends Component {
             otherusers: []
         };
         this.user = Cookie.get('user');
-        this.socket = io.connect('http://localhost:3001');
+        this.socket = io.connect(process.env.REACT_APP_END_POINT);
         this.socket.emit('getUsers', this.user);
         this.socket.on('users', data => { this.setState({ otherusers: data})});        
     }

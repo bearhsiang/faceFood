@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 import "./Login.css"
 
-const endpoint = 'http://localhost:3001'
+const endpoint = process.env.REACT_APP_END_POINT;
 class Signup extends Component{
 	constructor(props){
 		super(props);

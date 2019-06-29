@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 // import './UsersList.css';
 import io from 'socket.io-client';
-import Cookie from 'js-cookie';
 
 export default class Post extends Component {
     constructor(props) {
@@ -11,8 +10,8 @@ export default class Post extends Component {
         this.state = {
             image: []
         }
-        this.socket = io.connect('http://localhost:3001');
-        this.props.post.photo.map((photoID) => {
+        this.socket = io.connect(process.env.REACT_APP_END_POINT);
+        this.props.post.photo.forEach((photoID) => {
         	this.socket.emit('getImgByID', photoID);
         })
         this.socket.on('img', image => {
@@ -22,14 +21,16 @@ export default class Post extends Component {
 	        });
         })
     }
-
+    componentWillUnmount = () => {
+        this.socket.disconnect();
+    }
     want = () => {
         let post_id = this.props.post._id;
         let user_id = this.props.user._id;
         if(!user_id){
             return
         }
-        let mode = this.props.want == 'heart' ? 'delwant':'want';
+        let mode = this.props.want === 'heart' ? 'delwant':'want';
         this.props.wantSocket.emit(mode, post_id, user_id);
     }
 
@@ -45,7 +46,7 @@ export default class Post extends Component {
         return (
             <ul id={this.props._id} className={this.props.className}>
             	<li><h4>{this.props.post.name}</h4></li>
-            	<li><img src={this.state.image[0]} width="100%" /></li>
+            	<li><img alt='food' src={this.state.image[0]} width="100%" /></li>
                 <li>
                     <button className="btn" onClick={this.want} style={{padding: '0 1px'}}>
                         <Icon name={this.props.want} color="red"/>{this.props.post.rate}
