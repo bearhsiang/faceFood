@@ -157,7 +157,7 @@ const TopNav = ({user}) => {
           <Toolbar style={{marginLeft: '100px'}}>
             <Typography className={classes.title} variant="h6" noWrap style={{marginTop: '6px'}}>
               {/* <a className="EatingDiary" href="/">Eating Diary</a> */}
-              <Link to='/' className='EatingDiary'>Eating Diary</Link>
+              <Link to='/' className='EatingDiary'>faceFood</Link>
             </Typography>
             
             <div className={classes.search}>
